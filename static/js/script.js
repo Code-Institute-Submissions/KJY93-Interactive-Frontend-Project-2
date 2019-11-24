@@ -44,7 +44,7 @@ $(document).ready(function() {
                 let refTimeZone = 8;
 
                 // Get current timezone offset
-                let currentTimeZoneOffset = timeZoneOffset,
+                let currentTimeZoneOffset = timeZoneOffset;
 
                 // Get time at current location
                 // let currentTimeObject = new Date(response["currently"]["time"] * 1000) ;
