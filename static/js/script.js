@@ -39,6 +39,38 @@ $(document).ready(function() {
                 // Temperature unit will default to Celsius
                 $("#temperature-unit").html("&#8451;");
 
+                // Set body and table font color
+                $("body").css("color", "rgb(255,255,255)"); 
+                $("table").css("color", "rgb(255,255,255)");
+
+                // Get weather icon from dark sky
+                // Then based on result returned, change the background of the html
+                let weatherIcon = response["currently"]["icon"];
+
+                if ((weatherIcon.includes("cloudy")) || (weatherIcon.includes("fog"))) {
+                    // gradient css from https://gradienthunt.com/gradient/2141
+                    $("body").css("background-image", "linear-gradient(179.7deg,  rgba(197,214,227,1) 2.9%, rgba(144,175,202,1) 97.1% )");                    
+                }
+                else if (weatherIcon.includes("clear-day")) {
+                    // gradient css from https://cssgradient.io/gradient-backgrounds/
+                    $("body").css("background-image", "linear-gradient( 179.5deg,  rgba(255,230,69,1) 3.3%, rgba(255,157,73,1) 96% )"); 
+                }
+                else if (weatherIcon.includes("clear-night")) {
+                    // gradient from https://gradienthunt.com/gradient/4835
+                    $("body").css("background-image", "linear-gradient( 359.8deg,  rgba(56,104,178,1) 7.3%, rgba(31,67,122,1) 84.8% )"); 
+                }
+                else if ((weatherIcon.includes("rain")) || (weatherIcon.includes("sleet"))) {
+                    // gradient from https://gradienthunt.com/gradient/3610
+                    $("body").css("background-image", "linear-gradient( 177.7deg,  rgba(79,104,112,1) 4.1%, rgba(150,198,214,1) 93.9% )");  
+                }
+                else if ((weatherIcon.includes("snow"))) {
+                    // gradient from https://gradienthunt.com/gradient/4110
+                    $("body").css("background-image", "linear-gradient( 180deg,  rgba(29,70,163,1) 5.6%, rgba(17,196,238,1) 109.7% )");  
+                }
+                else {
+                    // gradient from https://cssgradient.io/gradient-backgrounds/
+                    $("body").css("background-image", "radial-gradient( circle 1305px at -23% -5.8%,  rgba(62,209,218,1) 0%, rgba(0,105,148,1) 59% )"); 
+                }
 
                 // Default timezone to compare with (currently set to compare to Singapore)
                 let refTimeZone = 8;
@@ -222,7 +254,8 @@ $(document).ready(function() {
 
     // Skycons animation
     function setWeatherIcons(icon, iconID) {
-        const skycons = new Skycons({color: "black"});
+
+        const skycons = new Skycons({color: "white"});
         skycons.play();
         return skycons.set(iconID, Skycons[icon])
     } 
