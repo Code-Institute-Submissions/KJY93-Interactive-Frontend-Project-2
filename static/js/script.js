@@ -233,20 +233,23 @@ $(document).ready(function() {
 
         let countryName = $("input").val();
         
+        // checking whether does the user key in the correct format (i.e city,country)
         if (countryName.includes(",")) {
             $.ajax({
                 type: "GET",
                 dataType: "json",
                 contentType: "text/plain",
-                url: `${proxy}https://weather.api.here.com/weather/1.0/report.json?app_id=4bLc3dg2HylJb4vmm4Mx&app_code=rDWf6Q2U_h1uphs-uOOJWA&product=observation&name=${countryName}`,
+                // using the weatherstack api to perform a query based on input from user 
+                url: `${proxy}http://api.weatherstack.com/current?access_key=adcf0b574a906d43986d1d8b229ad309&query=${countryName}`,
     
                 success: function (response) {
     
-                    let longCountry = response["observations"]["location"][0]["observation"][0]["longitude"];
-                    let latCountry =  response["observations"]["location"][0]["observation"][0]["latitude"];
-                    let countryTimeZoneOffset = (response["observations"]["location"][0]["observation"][0]["utcTime"]).slice(-6, -3);
+                    let longCountry = response["location"]["lon"];
+                    let latCountry =  response["location"]["lat"];
+                    let countryTimeZoneOffset = response["location"]["utc_offset"];
+                    let city = response["location"]["name"];
     
-                    getWeatherDetails(longCountry, latCountry, countryTimeZoneOffset);
+                    getWeatherDetails(longCountry, latCountry, countryTimeZoneOffset, city);
                 }
        
             });  
