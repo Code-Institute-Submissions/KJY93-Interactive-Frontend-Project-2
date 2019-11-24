@@ -14,7 +14,7 @@ $(document).ready(function() {
         success: function (response) {
             let longitude = response["longitude"];
             let latitude =  response["latitude"];
-            let timeZoneOffset = response["utc_offset"];
+            let timeZoneOffset = response["utc_offset"].slice(0,3);
             let city = response["city"];
             getWeatherDetails(longitude, latitude, timeZoneOffset, city);
         }        
@@ -44,7 +44,7 @@ $(document).ready(function() {
                 let refTimeZone = 8;
 
                 // Get current timezone offset
-                let currentTimeZoneOffset = parseInt(timeZoneOffset.slice(0,3));
+                let currentTimeZoneOffset = timeZoneOffset,
 
                 // Get time at current location
                 // let currentTimeObject = new Date(response["currently"]["time"] * 1000) ;
@@ -239,7 +239,7 @@ $(document).ready(function() {
                 type: "GET",
                 dataType: "json",
                 contentType: "text/plain",
-                // using the weatherstack api to perform a query based on input from user 
+                // using the weatherstack api to perform a query based on input from user to get location details (long, lat, timezone offset and city)
                 url: `${proxy}http://api.weatherstack.com/current?access_key=adcf0b574a906d43986d1d8b229ad309&query=${countryName}`,
     
                 success: function (response) {
