@@ -274,13 +274,18 @@ $(document).ready(function() {
             url: `${proxy}http://api.weatherstack.com/current?access_key=adcf0b574a906d43986d1d8b229ad309&query=${countryName}`,
 
             success: function (response) {
-
-                let longCountry = response["location"]["lon"];
-                let latCountry =  response["location"]["lat"];
-                let countryTimeZoneOffset = response["location"]["utc_offset"];
-                let city = response["location"]["name"];
-
-                getWeatherDetails(longCountry, latCountry, countryTimeZoneOffset, city);
+                // add a logic statement to handle the API query result (API query is successful but no result is returned)
+                if (response["success"] !== false) {
+                    let longCountry = response["location"]["lon"];
+                    let latCountry =  response["location"]["lat"];
+                    let countryTimeZoneOffset = response["location"]["utc_offset"];
+                    let city = response["location"]["name"];
+    
+                    getWeatherDetails(longCountry, latCountry, countryTimeZoneOffset, city);
+                }
+                else if (response["success"] === false) {
+                    alert("Error code: " + response["error"]["code"] + ", Error type: " + response["error"]["type"] + ", Info: " + response["error"]["info"]);
+                } 
             }
     
         });     
