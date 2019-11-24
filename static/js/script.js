@@ -264,7 +264,7 @@ $(document).ready(function() {
     $(".country-search").submit(function(event) {
         event.preventDefault();
 
-        let countryName = $("input").val();
+        let countryName = $("#autocomplete").val();
         
         $.ajax({
             type: "GET",
