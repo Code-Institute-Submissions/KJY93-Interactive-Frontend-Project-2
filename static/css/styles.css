@@ -1,0 +1,96 @@
+body {
+    font-family: 'Neucha', cursive, 'Sans-Serif';
+}
+
+h2 {
+    font-size: 1.2em;
+}
+
+hr, #current-day-container {
+    width: 100%;
+}
+
+label {
+    margin-bottom: 0;
+}
+
+#summary-container, #timezone-section, #current-day-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#timezone-section {
+    margin-top: 30px;
+}
+
+#temperature {
+    font-size: 3.0em;
+}
+
+#temperature-section, #temperature-conversion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#temperature-unit {
+    margin-left: 15px;
+    font-size: 1.5em;
+}
+
+.btn-group {
+    text-align: center;
+}
+
+#amPm, #weather-condition {
+    font-size: 1.3em;
+}
+
+#current-day-container-margin-top {
+    margin-top: 0;
+}
+
+#current-day-container {
+    align-items: flex-start;
+}
+
+#daily-temp-summary-container, #daily-high-low, .navbar {
+    display: flex;
+}
+
+#daily-temp-summary-container {
+    width: 100%;
+    justify-content: space-between;
+}
+
+#high-container {
+    margin-right: 10px;
+}
+
+#hours, .temperature-icon, #temperature-prediction, .temp-profile-of-week, .temp-misc-section {
+    text-align: center;
+}
+
+.weather-display-container table {
+    table-layout: fixed;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.temp-misc-section tr td {
+    width: 50%;
+}
+
+.form-container {
+    margin-bottom: 30px;
+}
+
+.form-inline {
+    flex-flow: initial;
+}
+
+.navbar {
+    justify-content: space-between;
+}
+
