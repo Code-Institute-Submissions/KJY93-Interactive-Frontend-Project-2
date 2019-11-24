@@ -53,7 +53,7 @@ $(document).ready(function() {
                 }
                 else if (weatherIcon.includes("clear-day")) {
                     // gradient css from https://cssgradient.io/gradient-backgrounds/
-                    $("body").css("background-image", "linear-gradient( 179.5deg,  rgba(255,230,69,1) 3.3%, rgba(255,157,73,1) 96% )"); 
+                    $("body").css("background-image", "linear-gradient( 176.4deg,  rgba(237,135,33,1) 28.8%, rgba(244,62,62,1) 99% )"); 
                 }
                 else if (weatherIcon.includes("clear-night")) {
                     // gradient from https://gradienthunt.com/gradient/4835
