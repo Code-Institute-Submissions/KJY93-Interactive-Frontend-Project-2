@@ -266,32 +266,24 @@ $(document).ready(function() {
 
         let countryName = $("input").val();
         
-        // checking whether does the user key in the correct format (i.e city,country)
-        if (countryName.includes(",")) {
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                contentType: "text/plain",
-                // using the weatherstack api to perform a query based on input from user to get location details (long, lat, timezone offset and city)
-                url: `${proxy}http://api.weatherstack.com/current?access_key=adcf0b574a906d43986d1d8b229ad309&query=${countryName}`,
-    
-                success: function (response) {
-    
-                    let longCountry = response["location"]["lon"];
-                    let latCountry =  response["location"]["lat"];
-                    let countryTimeZoneOffset = response["location"]["utc_offset"];
-                    let city = response["location"]["name"];
-    
-                    getWeatherDetails(longCountry, latCountry, countryTimeZoneOffset, city);
-                }
-       
-            });  
-        }
-        else {
-            alert("Please use city,country as the query format.")
-        }
-          
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            contentType: "text/plain",
+            // using the weatherstack api to perform a query based on input from user to get location details (long, lat, timezone offset and city)
+            url: `${proxy}http://api.weatherstack.com/current?access_key=adcf0b574a906d43986d1d8b229ad309&query=${countryName}`,
 
+            success: function (response) {
+
+                let longCountry = response["location"]["lon"];
+                let latCountry =  response["location"]["lat"];
+                let countryTimeZoneOffset = response["location"]["utc_offset"];
+                let city = response["location"]["name"];
+
+                getWeatherDetails(longCountry, latCountry, countryTimeZoneOffset, city);
+            }
+    
+        });     
         
     })
     // https://api.mapbox.com/geocoding/v5/mapbox.places/georgia.json?types=country&access_token=pk.eyJ1Ijoiank5MyIsImEiOiJjazM2MHZqenAwNnl1M2hxcDloZm0xajMzIn0.x2fIjAi3cI3gVT3LTZ_2FQ"
