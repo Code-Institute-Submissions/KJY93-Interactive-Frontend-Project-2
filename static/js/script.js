@@ -1,5 +1,11 @@
 $(document).ready(function() {
 
+    // hide the loading spinner
+    $("#loading").hide();
+
+    // hide the main content and load it only when the AJAX call is successful
+    $("#loaded").hide();
+
     // proxy to allow API query even if it is not on https
     let proxy = "https://cors-anywhere.herokuapp.com/";
     
@@ -11,7 +17,18 @@ $(document).ready(function() {
         contentType: "text/plain",
         url: "https://ipapi.co/json/",
 
+        "beforeSend": function (xhr) {
+            //before the ajax request query is send over let's do some UI changes
+            $("#loading").show();
+            $("#loaded").hide();
+        },
+
         success: function (response) {
+            // hide the loading spinner
+            $("#loading").hide();
+
+            // show the loaded content
+            $("#loaded").show();
             let longitude = response["longitude"];
             let latitude =  response["latitude"];
             let city = response["city"];
