@@ -32,220 +32,224 @@
 
 </head>
     <body>
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-md navbar-light bg-light">
-            <a class="navbar-brand" href="#">WeatherStack</a>
-            
-            <form class="country-search form-inline my-2 my-lg-0" method="post" action="">
-                <input id="autocomplete" class="form-control mr-sm-2" type="search" placeholder="Enter a location" required>
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
-            </form>          
+        <div id="loading"></div>
 
-        </nav>
+        <div id="loaded"></div>
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-md navbar-light bg-light">
+                <a class="navbar-brand" href="#">WeatherStack</a>
+                
+                <form class="country-search form-inline my-2 my-lg-0" method="post" action="">
+                    <input id="autocomplete" class="form-control mr-sm-2" type="search" placeholder="Enter a location" required>
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+                </form>          
 
-        <div class="container-fluid">
-            <div class="row">   
-                <div class="col-sm-12"> 
-                    <div id="summary-container">
-                        <div id="timezone-section">
-                            <h1 id="timezone"></h1>
-                            <div id="city-section"></div>
-                            <div id="amPm"></div>
-                        </div>
+            </nav>
 
-                        <div id="weather-section">
-                            <div id="weather-condition"></div>
-                        </div>
+            <div class="container-fluid">
+                <div class="row">   
+                    <div class="col-sm-12"> 
+                        <div id="summary-container">
+                            <div id="timezone-section">
+                                <h1 id="timezone"></h1>
+                                <div id="city-section"></div>
+                                <div id="amPm"></div>
+                            </div>
 
-                        <div id="temperature-section">
-                            <div id="temperature"></div>    
-                            <div id="temperature-unit"></div>          
-                        </div>
-                        
-                        <div id="current-day-container">
-                            <div id="daily-temp-summary-container">
-                                <div id="current-day"></div>
-                                <div id="daily-high-low">
-                                    <div id="high-container"><span id="high"></span></div>
-                                    <div id="low-container"><span id="low"></span></div>
-                                </div>
+                            <div id="weather-section">
+                                <div id="weather-condition"></div>
+                            </div>
+
+                            <div id="temperature-section">
+                                <div id="temperature"></div>    
+                                <div id="temperature-unit"></div>          
                             </div>
                             
-                            <hr id="current-day-container-margin-top">
+                            <div id="current-day-container">
+                                <div id="daily-temp-summary-container">
+                                    <div id="current-day"></div>
+                                    <div id="daily-high-low">
+                                        <div id="high-container"><span id="high"></span></div>
+                                        <div id="low-container"><span id="low"></span></div>
+                                    </div>
+                                </div>
+                                
+                                <hr id="current-day-container-margin-top">
 
-                            <!-- Weather display for the upcoming 7 hours -->
-                            <div class="weather-display-container">
-                                <table class="table table-borderless table-default">
-                                    <thead>
-                                        <tr id="hours">
-                                            <th id="hour0"></th>
-                                            <th id="hour1"></th>
-                                            <th id="hour2"></th>
-                                            <th id="hour3"></th>
-                                            <th id="hour4"></th>
-                                            <th id="hour5"></th>
-                                            <th id="hour6"></th>                          
-                                        </tr>                    
-                                    </thead>
-
-                                    <tbody>
-                                        <tr class="temperature-icon">
-                                            <td><canvas id="icon0"></canvas></td>
-                                            <td><canvas id="icon1"></canvas></td>
-                                            <td><canvas id="icon2"></canvas></td> 
-                                            <td><canvas id="icon3"></canvas></td>
-                                            <td><canvas id="icon4"></canvas></td>
-                                            <td><canvas id="icon5"></canvas></td>    
-                                            <td><canvas id="icon6"></canvas></td>                                                                                   
-                                        </tr>
-
-                                        <tr id="temperature-prediction">
-                                            <td id="temp0"></td>
-                                            <td id="temp1"></td>
-                                            <td id="temp2"></td> 
-                                            <td id="temp3"></td>
-                                            <td id="temp4"></td>
-                                            <td id="temp5"></td>    
-                                            <td id="temp6"></td>                                                                                   
-                                        </tr>                        
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <hr>
-
-                            <!-- Weather display for the upcoming 7 days -->
-                            <div class="weather-display-container">
-                                <table class="table table-borderless table-default">
-                                    <tbody>
-                                        <tr class="temp-profile-of-week">
-                                            <td id="day0"></td>
-                                            <td><canvas id="temp-day0-icon"></canvas></td>
-                                            <td id="temp-day0-high"></td>
-                                            <td id="temp-day0-low"></td>                                                                               
-                                        </tr>
-
-                                        <tr class="temp-profile-of-week">
-                                            <td id="day1"></td>
-                                            <td><canvas id="temp-day1-icon"></canvas></td>
-                                            <td id="temp-day1-high"></td>
-                                            <td id="temp-day1-low"></td>                                                                               
-                                        </tr>                                   
-
-
-                                        <tr class="temp-profile-of-week">
-                                            <td id="day2"></td>
-                                            <td><canvas id="temp-day2-icon"></canvas></td>
-                                            <td id="temp-day2-high"></td>
-                                            <td id="temp-day2-low"></td>                                                                               
-                                        </tr>
-
-                                        <tr class="temp-profile-of-week">
-                                            <td id="day3"></td>
-                                            <td><canvas id="temp-day3-icon"></canvas></td>
-                                            <td id="temp-day3-high"></td>
-                                            <td id="temp-day3-low"></td>                                                                               
-                                        </tr>  
-
-                                        <tr class="temp-profile-of-week">
-                                            <td id="day4"></td>
-                                            <td><canvas id="temp-day4-icon"></canvas></td>
-                                            <td id="temp-day4-high"></td>
-                                            <td id="temp-day4-low"></td>                                                                               
-                                        </tr>  
-
-                                        <tr class="temp-profile-of-week">
-                                            <td id="day5"></td>
-                                            <td><canvas id="temp-day5-icon"></canvas></td>
-                                            <td id="temp-day5-high"></td>
-                                            <td id="temp-day5-low"></td>                                                                               
-                                        </tr>   
-
-                                        <tr class="temp-profile-of-week">
-                                            <td id="day6"></td>
-                                            <td><canvas id="temp-day6-icon"></canvas></td>
-                                            <td id="temp-day6-high"></td>
-                                            <td id="temp-day6-low"></td>                                                                               
-                                        </tr> 
-                                    </tbody>
-                                </table>
-                            </div>                        
-
-                            <hr>
-                        </div>
-                
-                <div class="container-fluid">
-                    <div class="row">   
-                        <div class="col-sm-12">    
-                            <table class="table table-striped">
-                                        <tbody class="temp-misc-section">
-                                            <tr>
-                                                <td>
-                                                    <div>
-                                                        <label id="sunrise-label"></label>
-                                                        <div id="sunrise-time"></div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <label id="sunset-label"></label>
-                                                        <div id="sunset-time"></div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div>
-                                                        <label id="chance-of-rain-label"></label>
-                                                        <div id="chance-of-rain-percentage"></div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <label id="humidity-label"></label>
-                                                        <div id="humidity-percentage"></div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div>
-                                                        <label id="wind-label"></label>
-                                                        <div id="wind-speed"></div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <label id="feels-like-label"></label>
-                                                        <div id="feels-like"></div>
-                                                    </div>
-                                                </td>
+                                <!-- Weather display for the upcoming 7 hours -->
+                                <div class="weather-display-container">
+                                    <table class="table table-borderless table-default">
+                                        <thead>
+                                            <tr id="hours">
+                                                <th id="hour0"></th>
+                                                <th id="hour1"></th>
+                                                <th id="hour2"></th>
+                                                <th id="hour3"></th>
+                                                <th id="hour4"></th>
+                                                <th id="hour5"></th>
+                                                <th id="hour6"></th>                          
                                             </tr>                    
+                                        </thead>
 
-                                            <tr>
-                                                <td>
-                                                    <div>
-                                                        <label id="visibility-label"></label>
-                                                        <div id="visibility-level"></div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <label id="uv-index-label"></label>
-                                                        <div id="uv-index-level"></div>
-                                                    </div>
-                                                </td>
-                                            </tr> 
+                                        <tbody>
+                                            <tr class="temperature-icon">
+                                                <td><canvas id="icon0"></canvas></td>
+                                                <td><canvas id="icon1"></canvas></td>
+                                                <td><canvas id="icon2"></canvas></td> 
+                                                <td><canvas id="icon3"></canvas></td>
+                                                <td><canvas id="icon4"></canvas></td>
+                                                <td><canvas id="icon5"></canvas></td>    
+                                                <td><canvas id="icon6"></canvas></td>                                                                                   
+                                            </tr>
 
+                                            <tr id="temperature-prediction">
+                                                <td id="temp0"></td>
+                                                <td id="temp1"></td>
+                                                <td id="temp2"></td> 
+                                                <td id="temp3"></td>
+                                                <td id="temp4"></td>
+                                                <td id="temp5"></td>    
+                                                <td id="temp6"></td>                                                                                   
+                                            </tr>                        
                                         </tbody>
                                     </table>
                                 </div>
-                            </div> 
-                        </div>  
-                    </div>
-                </div>   
+
+                                <hr>
+
+                                <!-- Weather display for the upcoming 7 days -->
+                                <div class="weather-display-container">
+                                    <table class="table table-borderless table-default">
+                                        <tbody>
+                                            <tr class="temp-profile-of-week">
+                                                <td id="day0"></td>
+                                                <td><canvas id="temp-day0-icon"></canvas></td>
+                                                <td id="temp-day0-high"></td>
+                                                <td id="temp-day0-low"></td>                                                                               
+                                            </tr>
+
+                                            <tr class="temp-profile-of-week">
+                                                <td id="day1"></td>
+                                                <td><canvas id="temp-day1-icon"></canvas></td>
+                                                <td id="temp-day1-high"></td>
+                                                <td id="temp-day1-low"></td>                                                                               
+                                            </tr>                                   
+
+
+                                            <tr class="temp-profile-of-week">
+                                                <td id="day2"></td>
+                                                <td><canvas id="temp-day2-icon"></canvas></td>
+                                                <td id="temp-day2-high"></td>
+                                                <td id="temp-day2-low"></td>                                                                               
+                                            </tr>
+
+                                            <tr class="temp-profile-of-week">
+                                                <td id="day3"></td>
+                                                <td><canvas id="temp-day3-icon"></canvas></td>
+                                                <td id="temp-day3-high"></td>
+                                                <td id="temp-day3-low"></td>                                                                               
+                                            </tr>  
+
+                                            <tr class="temp-profile-of-week">
+                                                <td id="day4"></td>
+                                                <td><canvas id="temp-day4-icon"></canvas></td>
+                                                <td id="temp-day4-high"></td>
+                                                <td id="temp-day4-low"></td>                                                                               
+                                            </tr>  
+
+                                            <tr class="temp-profile-of-week">
+                                                <td id="day5"></td>
+                                                <td><canvas id="temp-day5-icon"></canvas></td>
+                                                <td id="temp-day5-high"></td>
+                                                <td id="temp-day5-low"></td>                                                                               
+                                            </tr>   
+
+                                            <tr class="temp-profile-of-week">
+                                                <td id="day6"></td>
+                                                <td><canvas id="temp-day6-icon"></canvas></td>
+                                                <td id="temp-day6-high"></td>
+                                                <td id="temp-day6-low"></td>                                                                               
+                                            </tr> 
+                                        </tbody>
+                                    </table>
+                                </div>                        
+
+                                <hr>
+                            </div>
+                    
+                    <div class="container-fluid">
+                        <div class="row">   
+                            <div class="col-sm-12">    
+                                <table class="table table-striped">
+                                            <tbody class="temp-misc-section">
+                                                <tr>
+                                                    <td>
+                                                        <div>
+                                                            <label id="sunrise-label"></label>
+                                                            <div id="sunrise-time"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <label id="sunset-label"></label>
+                                                            <div id="sunset-time"></div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <div>
+                                                            <label id="chance-of-rain-label"></label>
+                                                            <div id="chance-of-rain-percentage"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <label id="humidity-label"></label>
+                                                            <div id="humidity-percentage"></div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <div>
+                                                            <label id="wind-label"></label>
+                                                            <div id="wind-speed"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <label id="feels-like-label"></label>
+                                                            <div id="feels-like"></div>
+                                                        </div>
+                                                    </td>
+                                                </tr>                    
+
+                                                <tr>
+                                                    <td>
+                                                        <div>
+                                                            <label id="visibility-label"></label>
+                                                            <div id="visibility-level"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <label id="uv-index-label"></label>
+                                                            <div id="uv-index-level"></div>
+                                                        </div>
+                                                    </td>
+                                                </tr> 
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div> 
+                            </div>  
+                        </div>
+                    </div>   
+                </div>
             </div>
         </div>
 
