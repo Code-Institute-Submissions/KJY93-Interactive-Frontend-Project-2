@@ -29,6 +29,10 @@ $(document).ready(function() {
 
             // show the loaded content
             $("#loaded").show();
+
+            // added <hr> element to the divs container
+            $("hr-1").html("<hr>");
+            $("hr-2").html("<hr>");
             let longitude = response["longitude"];
             let latitude =  response["latitude"];
             let city = response["city"];
