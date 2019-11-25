@@ -110,3 +110,21 @@ label {
     background: url("../images/cubic.svg");
     background-size: 100%;
 }
+
+
+#hr-1 {
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+}
+
+
+#hr-2 {
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+}
