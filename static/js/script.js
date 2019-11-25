@@ -14,15 +14,17 @@ $(document).ready(function() {
         success: function (response) {
             let longitude = response["longitude"];
             let latitude =  response["latitude"];
-            let timeZoneOffset = response["utc_offset"].slice(0,3);
             let city = response["city"];
-            getWeatherDetails(longitude, latitude, timeZoneOffset, city);
+            // save current local timezone offset to local storage
+            localStorage.setItem("localRefTimeZone", response["utc_offset"].slice(0,3));
+
+            getWeatherDetails(longitude, latitude, city);
         }        
     });4
 
     $(("label")[0]).addClass("active");
 
-    function getWeatherDetails(longitude, latitude, timeZoneOffset, city) {  
+    function getWeatherDetails(longitude, latitude, city) {  
     
         $.ajax({
             type: "GET",
@@ -73,21 +75,24 @@ $(document).ready(function() {
                 }
 
                 // Default timezone to compare with (currently set to compare to Singapore)
-                // let refTimeZone = 8;
-                let refTimeZone = timeZoneOffset;
+                let refTimeZone = localStorage.getItem("localRefTimeZone");
 
                 // Get current timezone offset
-                let currentTimeZoneOffset = timeZoneOffset;
+                let currentTimeZoneOffset = response["offset"];
 
                 // Get time at current location
-                // let currentTimeObject = new Date(response["currently"]["time"] * 1000) ;
-                // Newly added 23/11/19
+
+                console.log(parseInt(refTimeZone))
+
                 if (parseInt(refTimeZone) > 0) {
-                    var currentTimeObject = new Date(((response["currently"]["time"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000))
+                    var currentTimeObject = new Date(((response["currently"]["time"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000));
                 }
                 else if (parseInt(refTimeZone) < 0) {
                     var currentTimeObject = new Date(((response["currently"]["time"] - (refTimeZone * 3600) - (currentTimeZoneOffset * 3600)) * 1000));
                 }
+
+
+
 
                 let currentHour = hourMinutes(currentTimeObject.getHours());
 
@@ -284,10 +289,8 @@ $(document).ready(function() {
                 if (response["success"] !== false) {
                     let longCountry = response["location"]["lon"];
                     let latCountry =  response["location"]["lat"];
-                    let countryTimeZoneOffset = response["location"]["utc_offset"];
                     let city = response["location"]["name"];
-    
-                    getWeatherDetails(longCountry, latCountry, countryTimeZoneOffset, city);
+                    getWeatherDetails(longCountry, latCountry, city);
                 }
                 else if (response["success"] === false) {
                     alert("Error code: " + response["error"]["code"] + ", Error type: " + response["error"]["type"] + ", Info: " + response["error"]["info"]);
