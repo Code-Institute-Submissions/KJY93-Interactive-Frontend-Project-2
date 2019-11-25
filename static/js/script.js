@@ -18,7 +18,7 @@ $(document).ready(function() {
             let city = response["city"];
             getWeatherDetails(longitude, latitude, timeZoneOffset, city);
         }        
-    });
+    });4
 
     $(("label")[0]).addClass("active");
 
@@ -73,7 +73,8 @@ $(document).ready(function() {
                 }
 
                 // Default timezone to compare with (currently set to compare to Singapore)
-                let refTimeZone = 8;
+                // let refTimeZone = 8;
+                let refTimeZone = timeZoneOffset;
 
                 // Get current timezone offset
                 let currentTimeZoneOffset = timeZoneOffset;
@@ -81,7 +82,12 @@ $(document).ready(function() {
                 // Get time at current location
                 // let currentTimeObject = new Date(response["currently"]["time"] * 1000) ;
                 // Newly added 23/11/19
-                let currentTimeObject = new Date(((response["currently"]["time"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000));
+                if (parseInt(refTimeZone) > 0) {
+                    var currentTimeObject = new Date(((response["currently"]["time"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000))
+                }
+                else if (parseInt(refTimeZone) < 0) {
+                    var currentTimeObject = new Date(((response["currently"]["time"] - (refTimeZone * 3600) - (currentTimeZoneOffset * 3600)) * 1000));
+                }
 
                 let currentHour = hourMinutes(currentTimeObject.getHours());
 
@@ -156,7 +162,7 @@ $(document).ready(function() {
                 // Update chance of rain and humidity percentage for the current moment
                 // Chance of Rain
                 $(`#chance-of-rain-label`).html("CHANCE OF RAIN");
-                $(`#chance-of-rain-percentage`).html(response["currently"]["precipProbability"] * 100 + "%");
+                $(`#chance-of-rain-percentage`).html(Math.round(response["currently"]["precipProbability"] * 100) + "%");
 
                 // Humidity
                 $(`#humidity-label`).html("HUMIDITY");
