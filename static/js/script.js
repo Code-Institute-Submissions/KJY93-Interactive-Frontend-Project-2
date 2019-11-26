@@ -296,22 +296,22 @@ $(document).ready(function() {
     $(".country-search").submit(function(event) {
         event.preventDefault();
 
-        let countryName = $("#autocomplete").val();
+        // get longitude and latitude value from the hidden input form field
+        let queryLng = $("#lng").val();
+        let queryLat = $("#lat").val();
         
         $.ajax({
             type: "GET",
             dataType: "json",
             contentType: "text/plain",
-            // using the weatherstack api to perform a query based on input from user to get location details (long, lat, timezone offset and city)
-            url: `${proxy}http://api.weatherstack.com/current?access_key=adcf0b574a906d43986d1d8b229ad309&query=${countryName}`,
+            // using the weatherstack api to perform a query based on input from user to get location details (timezone offset and city)
+            url: `${proxy}http://api.weatherstack.com/current?access_key=adcf0b574a906d43986d1d8b229ad309&query=${queryLat},${queryLng}`,
 
             success: function (response) {
                 // add a logic statement to handle the API query result (API query is successful but no result is returned)
                 if (response["success"] !== false) {
-                    let longCountry = response["location"]["lon"];
-                    let latCountry =  response["location"]["lat"];
                     let city = response["location"]["name"];
-                    getWeatherDetails(longCountry, latCountry, city);
+                    getWeatherDetails(queryLng.toString(), queryLat.toString(), city);
                 }
                 else if (response["success"] === false) {
                     alert("Error code: " + response["error"]["code"] + ", Error type: " + response["error"]["type"] + ", Info: " + response["error"]["info"]);
