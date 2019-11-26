@@ -295,7 +295,6 @@ $(document).ready(function() {
         event.preventDefault();
 
         // get longitude and latitude value from the hidden input form field
-        console.log("123");
         let queryLng = $("#lng").val();
         let queryLat = $("#lat").val();
         
