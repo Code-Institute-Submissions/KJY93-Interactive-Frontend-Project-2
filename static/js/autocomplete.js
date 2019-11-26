@@ -9,8 +9,21 @@ function initMap() {
         var lng = place.geometry.location.lng();
 
         // append hidden input field based on selection to the form element 
-        $(".country-search").append(`<input type="hidden" id="lng" name="lng" value="${lng}">`);
-        $(".country-search").append(`<input type="hidden" id="lat" name="lat" value="${lat}">`);
+        // added logic statement to update lat and long value in the hidden input form field
+        if ($("#lng").length === 0) {
+            $(".country-search").append(`<input type="hidden" id="lng" name="lng" value=${lng}>`);
+        }
+        if ($("#lat").length === 0) {
+            $(".country-search").append(`<input type="hidden" id="lat" name="lat" value=${lat}>`);
+        }
+
+        if ($("#lng").length !== 0) {
+            $("#lng").attr("value", `${lng}`)
+        }
+
+        if ($("#lat").length !== 0) {
+            $("#lat").attr("value", `${lat}`)
+        }
 
     })
 }
