@@ -103,8 +103,6 @@ $(document).ready(function() {
 
                 // Get time at current location
 
-                console.log(parseInt(refTimeZone))
-
                 if (parseInt(refTimeZone) > 0) {
                     var currentTimeObject = new Date(((response["currently"]["time"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000));
                 }
@@ -190,35 +188,27 @@ $(document).ready(function() {
                 $(`#chance-of-rain-label`).html("CHANCE OF RAIN");
                 $(`#chance-of-rain-percentage`).html(Math.round(response["currently"]["precipProbability"] * 100) + "%");
 
-                console.log("checkpoint");
-
                 // Humidity
                 $(`#humidity-label`).html("HUMIDITY");
                 $(`#humidity-percentage`).html(Math.floor(response["currently"]["humidity"] * 100) + "%");
 
-                console.log("done1");
                 // Update wind direction and feels like for the current moment
                 // Wind 
                 $(`#wind-label`).html("WIND");
                 $(`#wind-speed`).html(Math.ceil(response["currently"]["windSpeed"]) + " " + "mps");
-                console.log("done2");
 
                 // Feels like
                 $(`#feels-like-label`).html("FEELS LIKE");
                 $(`#feels-like`).html(Math.floor(response["currently"]["apparentTemperature"]).toString() + "&#8451;");
-                console.log("done3");
 
                 // Update visibility and uv-index for the current moment
                 // Visibility
                 $(`#visibility-label`).html("VISIBILITY");
                 $(`#visibility-level`).html(Math.floor(response["currently"]["visibility"]).toString() + " " + "km");
-                console.log("done4");
 
                 // UV Index
                 $(`#uv-index-label`).html("UV INDEX");
                 $(`#uv-index-level`).html(response["currently"]["uvIndex"]);
-
-                console.log("done");
 
             }
         });
