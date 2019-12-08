@@ -138,7 +138,17 @@ $(document).ready(function() {
                 // Replace the - weather icon to _ in order to use skycons.js to display the animated weather icon
                 for (var i=0; i<sevenHoursPrediction.length; i++) {
 
-                    $(`#hour${i}`).html(hourMinutes(new Date(((response["hourly"]["data"][i]["time"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000)).getHours()))
+                    // Added this variable to get current hour so that it could be compared with the hour returned from Dark Sky
+                    let currentHourOfDay = new Date().getHours();
+
+                    // If current hour is similar to the current hour returned from Dark Sky API, proceed to rename the current hour to "Now" instead
+                    if(currentHourOfDay === parseInt(hourMinutes(new Date(((response["hourly"]["data"][i]["time"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000)).getHours()))) {
+                        $(`#hour${i}`).html("Now");
+                    }
+                    else {
+                        $(`#hour${i}`).html(hourMinutes(new Date(((response["hourly"]["data"][i]["time"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000)).getHours())); 
+                    }
+                
                     $(`#temp${i}`).html(Math.floor(response["hourly"]["data"][i]["temperature"]));
                     weatherIcons.push(((sevenHoursPrediction[i]["icon"]).replace(/-/g, "_")).toUpperCase());
                 }     
