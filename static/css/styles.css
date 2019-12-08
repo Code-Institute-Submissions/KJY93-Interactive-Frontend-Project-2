@@ -98,6 +98,10 @@ label {
     justify-content: space-between;
 }
 
+#autocomplete { 
+    width: 230px; 
+}
+
 /* css to style the loading spinner to appear at the center of the page taken from https://stackoverflow.com/questions/23184747/show-spinner-at-the-center-of-html5-page */
 #loading {
     position: absolute;
@@ -127,4 +131,12 @@ label {
     margin-bottom: 1rem;
     border: 0;
     border-top: 1px solid rgba(0,0,0,.1);
+}
+
+@media (max-width: 575.98px) {
+	.navbar-weather-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+	}
 }

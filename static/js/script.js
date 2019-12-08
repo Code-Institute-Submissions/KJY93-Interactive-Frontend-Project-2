@@ -41,9 +41,7 @@ $(document).ready(function() {
 
             getWeatherDetails(longitude, latitude, city);
         }        
-    });4
-
-    $(("label")[0]).addClass("active");
+    });
 
     function getWeatherDetails(longitude, latitude, city) {  
     
@@ -75,8 +73,8 @@ $(document).ready(function() {
                     $("body").css("background-image", "linear-gradient(179.7deg,  rgba(197,214,227,1) 2.9%, rgba(144,175,202,1) 97.1% )");                    
                 }
                 else if (weatherIcon.includes("clear-day")) {
-                    // gradient css from https://cssgradient.io/gradient-backgrounds/
-                    $("body").css("background-image", "linear-gradient( 176.4deg,  rgba(237,135,33,1) 28.8%, rgba(244,62,62,1) 99% )"); 
+                    // https://cssgradient.io/gradient-backgrounds/
+                    $("body").css("background-image", "linear-gradient( 135deg, #ABDCFF 10%, #0396FF 100%)"); 
                 }
                 else if (weatherIcon.includes("clear-night")) {
                     // gradient from https://gradienthunt.com/gradient/4835
