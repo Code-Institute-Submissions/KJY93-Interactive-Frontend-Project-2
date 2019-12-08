@@ -47,6 +47,10 @@ label {
     font-size: 1.3em;
 }
 
+#daily-temp-summary-container, tr {
+    font-size: 1.2em;
+}
+
 #city-section {
     font-size: 1.8em;
 }
