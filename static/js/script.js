@@ -185,11 +185,15 @@ $(document).ready(function() {
                 $(`#sunrise-time`).html(hourMinutes(sunriseTime.getHours()) + ":" + hourMinutes(sunriseTime.getMinutes())
                 + " " + antiPostMeridien(hourMinutes(sunriseTime.getHours())));
 
+                $("#sunrise-img").attr("src", "./static/images/sunrise.png")
+
                 // Sunset time
                 $(`#sunset-label`).html("SUNSET");
                 let sunsetTime = new Date(((response["daily"]["data"][0]["sunsetTime"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000));
                 $(`#sunset-time`).html(hourMinutes(sunsetTime.getHours()) + ":" + hourMinutes(sunsetTime.getMinutes())
                 + " " + antiPostMeridien(hourMinutes(sunsetTime.getHours())));
+
+                $("#sunset-img").attr("src", "./static/images/sunset.png")
 
                 // Update chance of rain and humidity percentage for the current moment
                 // Chance of Rain
