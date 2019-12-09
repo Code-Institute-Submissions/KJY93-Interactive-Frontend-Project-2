@@ -122,7 +122,7 @@ $(document).ready(function() {
                 // Call the dayOfWeek function
                 var currentDay = dayOfWeek(day);
                 
-                $("#current-day").html(currentDay + " " + "TODAY");
+                $("#current-day").html("TODAY");
 
                 // Update daily lowest and highest temperature
                 $("#high").html("Hi: " + (Math.floor(response["daily"]["data"][0]["temperatureHigh"]).toString())); 
