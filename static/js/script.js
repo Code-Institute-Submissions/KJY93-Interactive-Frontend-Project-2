@@ -108,9 +108,6 @@ $(document).ready(function() {
                     var currentTimeObject = new Date(((response["currently"]["time"] - (refTimeZone * 3600) - (currentTimeZoneOffset * 3600)) * 1000));
                 }
 
-
-
-
                 let currentHour = hourMinutes(currentTimeObject.getHours());
 
                 let currentMinutes = hourMinutes(currentTimeObject.getMinutes());
@@ -222,6 +219,89 @@ $(document).ready(function() {
             }
         });
     };
+
+    // Degree Celcius / Fahrenheit Conversion
+    // Default to celcius 
+    $("#celsius").attr("checked", "checked");
+    document.getElementById("celsius-label").classList.add("active");
+
+    // Add an onclick event listener to toggle between Celsius and Fahrenheit 
+    $("#celsius-label").click(function () {
+        if ($("#celsius").is(":checked") === false) {
+            $("#celsius").attr("checked", "checked");
+            $("#fahrenheit").removeAttr("checked");   
+            
+            // Convert current temperature to Celsius
+            $("#temperature").html( Math.round((parseInt($("#temperature").text())-32)/1.8));
+
+            // Change to Celsius symbol
+            $("#temperature-unit").html("&#x2103;");
+
+            // Convert High and Low Temperature section to Celsius
+            $("#high").html("Hi: " + (Math.round(((parseInt($("#high").text().substring(4,6)))-32)/1.8)).toString());
+            $("#low").html("Lo: " + (Math.round(((parseInt($("#low").text().substring(4,6)))-32)/1.8)).toString());
+
+            // Convert 7 hours weather display to Celsius
+            let temperatureSevenHourCelsius = $("#temperature-prediction")["0"]["cells"]["length"];
+
+            for (let d=0; d<temperatureSevenHourCelsius ; d++) {
+                $(`#temp${d}`).html((Math.round(((parseInt($(`#temp${d}`).text().substring(0,2)))-32)/1.8)).toString() + "&#xb0;");
+            }
+
+            // Convert upcoming seven days temperature to Celsius
+            let temperatureSevenDaysCelsius = $(".temp-profile-of-week")["length"];
+
+            for (let f=0; f<temperatureSevenDaysCelsius; f++) {
+                $(`#temp-day${f}-high`).html(Math.round((parseInt($(`#temp-day${f}-high`).text())-32)/1.8).toString());
+                $(`#temp-day${f}-low`).html(Math.round((parseInt($(`#temp-day${f}-low`).text())-32)/1.8).toString());
+            }
+
+            // Convert feels like weather temperature to Fahrenheit
+            $("#feels-like").html(Math.round(((parseInt($("#feels-like").text()))-32)/1.8) + "&#x2103;");
+
+
+        }
+    });
+
+    $("#fahrenheit-label").click(function() {
+
+        if ($("#fahrenheit").is(":checked") === false) {
+            $("#fahrenheit").attr("checked", "checked");
+            $("#celsius").removeAttr("checked");
+
+        // Convert current temperature to Fahrenheit
+        $("#temperature").html(Math.round(parseInt($("#temperature").text())*1.8 + 32));
+
+        // Change to Fahrenheit symbol
+        $("#temperature-unit").html("&#x2109;");
+
+        // Convert High and Low Temperature section to Fahrenheit
+        $("#high").html("Hi: " + (Math.round(parseInt($("#high").text().substring(4,6))*1.8 + 32)).toString());
+        $("#low").html("Lo: " + (Math.round(parseInt($("#low").text().substring(4,6))*1.8 + 32)).toString());
+
+        // Convert 7 hours weather display to Fahrenheit
+        let temperatureSevenHourFahrenheit = $("#temperature-prediction")["0"]["cells"]["length"];
+
+        for (let n=0; n<temperatureSevenHourFahrenheit ; n++) {
+            $(`#temp${n}`).html((Math.round(parseInt($(`#temp${n}`).text().substring(0,2))*1.8 + 32)).toString() + "&#xb0;");
+        }
+
+        // Convert upcoming seven days temperature to Fahrenheit
+        let temperatureSevenDaysFahrenheit = $(".temp-profile-of-week")["length"];
+
+        for (let m=0; m<temperatureSevenDaysFahrenheit ; m++) {
+            $(`#temp-day${m}-high`).html(Math.round(parseInt(($(`#temp-day${m}-high`).text())*1.8 + 32)).toString());
+            $(`#temp-day${m}-low`).html(Math.round(parseInt(($(`#temp-day${m}-low`).text())*1.8 + 32)).toString());
+        }
+
+        // Convert feels like weather temperature to Fahrenheit
+        $("#feels-like").html(Math.round((parseInt($("#feels-like").text()))*1.8 + 32) + "&#x2109;");
+    }
+
+
+    });
+
+
 
     // Hour function
     function hourMinutes(time) {
