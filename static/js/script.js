@@ -143,7 +143,7 @@ $(document).ready(function() {
                         $(`#hour${i}`).html(hourMinutes(new Date(((response["hourly"]["data"][i]["time"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000)).getHours())); 
                     }
                 
-                    $(`#temp${i}`).html(Math.floor(response["hourly"]["data"][i]["temperature"]) + "&#xb0;");
+                    $(`#temp${i}`).html(Math.floor(response["hourly"]["data"][i]["temperature"]) + "&#8451;");
                     weatherIcons.push(((sevenHoursPrediction[i]["icon"]).replace(/-/g, "_")).toUpperCase());
                 }     
                 
