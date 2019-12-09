@@ -43,6 +43,10 @@ label {
     text-align: center;
 }
 
+.footer-container {
+    background-color: #f8f9fa;
+}
+
 #amPm, #weather-condition {
     font-size: 1.3em;
 }
@@ -103,7 +107,7 @@ label {
 }
 
 #autocomplete { 
-    width: 230px; 
+    width: 210px; 
 }
 
 /* css to style the loading spinner to appear at the center of the page taken from https://stackoverflow.com/questions/23184747/show-spinner-at-the-center-of-html5-page */
