@@ -52,7 +52,6 @@ $(document).ready(function() {
             url: `${proxy}https://api.darksky.net/forecast/33d90799f68e195b57437884fb34e078/${latitude},${longitude}?units=si`,
             
             success: function(response) {
-                $("#timezone").html(response["timezone"]);
                 $("#weather-condition").html(response["currently"]["summary"]);
                 $("#temperature").html(Math.floor(response["currently"]["temperature"]));
                 $("#city-section").html(city);
