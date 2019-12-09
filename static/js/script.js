@@ -58,7 +58,7 @@ $(document).ready(function() {
                 $("#city-section").html(city);
 
                 // Temperature unit will default to Celsius
-                $("#temperature-unit").html("&#8451;");
+                $("#temperature-unit").html("&#xb0;");
 
                 // Set body and table font color
                 $("body").css("color", "rgb(255,255,255)"); 
@@ -143,7 +143,7 @@ $(document).ready(function() {
                         $(`#hour${i}`).html(hourMinutes(new Date(((response["hourly"]["data"][i]["time"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000)).getHours())); 
                     }
                 
-                    $(`#temp${i}`).html(Math.floor(response["hourly"]["data"][i]["temperature"]) + "&#8451;");
+                    $(`#temp${i}`).html(Math.floor(response["hourly"]["data"][i]["temperature"]) + "&#xb0;");
                     weatherIcons.push(((sevenHoursPrediction[i]["icon"]).replace(/-/g, "_")).toUpperCase());
                 }     
                 
@@ -205,7 +205,7 @@ $(document).ready(function() {
 
                 // Feels like
                 $(`#feels-like-label`).html("FEELS LIKE");
-                $(`#feels-like`).html(Math.floor(response["currently"]["apparentTemperature"]).toString() + "&#8451;");
+                $(`#feels-like`).html(Math.floor(response["currently"]["apparentTemperature"]).toString() + "&#xb0;");
 
                 // Update visibility and uv-index for the current moment
                 // Visibility
@@ -234,9 +234,6 @@ $(document).ready(function() {
             // Convert current temperature to Celsius
             $("#temperature").html( Math.round((parseInt($("#temperature").text())-32)/1.8));
 
-            // Change to Celsius symbol
-            $("#temperature-unit").html("&#x2103;");
-
             // Convert High and Low Temperature section to Celsius
             $("#high").html("Hi: " + (Math.round(((parseInt($("#high").text().substring(4,6)))-32)/1.8)).toString());
             $("#low").html("Lo: " + (Math.round(((parseInt($("#low").text().substring(4,6)))-32)/1.8)).toString());
@@ -257,7 +254,7 @@ $(document).ready(function() {
             }
 
             // Convert feels like weather temperature to Fahrenheit
-            $("#feels-like").html(Math.round(((parseInt($("#feels-like").text()))-32)/1.8) + "&#x2103;");
+            $("#feels-like").html(Math.round(((parseInt($("#feels-like").text()))-32)/1.8) + "&#xb0;");
 
 
         }
@@ -272,8 +269,6 @@ $(document).ready(function() {
         // Convert current temperature to Fahrenheit
         $("#temperature").html(Math.round(parseInt($("#temperature").text())*1.8 + 32));
 
-        // Change to Fahrenheit symbol
-        $("#temperature-unit").html("&#x2109;");
 
         // Convert High and Low Temperature section to Fahrenheit
         $("#high").html("Hi: " + (Math.round(parseInt($("#high").text().substring(4,6))*1.8 + 32)).toString());
@@ -295,7 +290,7 @@ $(document).ready(function() {
         }
 
         // Convert feels like weather temperature to Fahrenheit
-        $("#feels-like").html(Math.round((parseInt($("#feels-like").text()))*1.8 + 32) + "&#x2109;");
+        $("#feels-like").html(Math.round((parseInt($("#feels-like").text()))*1.8 + 32) + "&#xb0;");
     }
 
 
