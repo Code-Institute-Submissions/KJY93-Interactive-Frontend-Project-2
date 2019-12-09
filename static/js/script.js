@@ -392,7 +392,7 @@ $(document).ready(function() {
             dataType: "json",
             contentType: "text/plain",
             // using the weatherstack api to perform a query based on input from user to get location details (timezone offset and city)
-            url: `${proxy}http://api.weatherstack.com/current?access_key=adcf0b574a906d43986d1d8b229ad309&query=${queryLat},${queryLng}`,
+            url: `http://api.weatherstack.com/current?access_key=adcf0b574a906d43986d1d8b229ad309&query=${queryLat},${queryLng}`,
 
             success: function (response) {
                 // add a logic statement to handle the API query result (API query is successful but no result is returned)
