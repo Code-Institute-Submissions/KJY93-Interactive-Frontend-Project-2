@@ -28,6 +28,9 @@
     <!-- Skycons JS -->
     <script src="static/js/skycons.js"></script>    
 
+    <!-- Chart JS 091219 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
     <title>Weather Radar</title>
 
 </head>
@@ -43,8 +46,7 @@
                     <form class="country-search form-inline my-2 my-lg-0" method="post" action="">
                         <input id="autocomplete" class="form-control mr-sm-2" type="search" placeholder="Enter a location"
                             required>
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i
-                                class="fas fa-search"></i></button>
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
                     </form>
                 </div>
             </nav>
@@ -54,8 +56,7 @@
                     <div class="col-sm-12">
                         <div id="summary-container">
                             <div id="timezone-section">
-                                <h1 id="timezone"></h1>
-                                <div id="city-section"></div>
+                                <h1 id="city-section"></h1>
                                 <div id="amPm"></div>
                             </div>
         
@@ -71,6 +72,7 @@
                             <div id="current-day-container">
                                 <div id="daily-temp-summary-container">
                                     <div id="current-day"></div>
+                                    <!-- <button id="chart-view" type="button" class="btn btn-secondary">Chart View</button> -->
                                     <div id="daily-high-low">
                                         <div id="high-container"><span id="high"></span></div>
                                         <div id="low-container"><span id="low"></span></div>
@@ -80,8 +82,9 @@
                                 <hr id="current-day-container-margin-top">
         
                                 <!-- Weather display for the upcoming 7 hours -->
+
                                 <div class="weather-display-container">
-                                    <table class="table table-borderless table-default">
+                                    <table class="table table-borderless table-default weather-display-container">
                                         <thead>
                                             <tr id="hours">
                                                 <th id="hour0"></th>
@@ -117,6 +120,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+
         
                                 <div id="hr-1"></div>
         
@@ -259,6 +263,35 @@
         </div>
     
         <div class="card-footer text-muted footer-container text-center">
+            <!-- 101219 added to display map upon clicking on the location logo -->
+            <div>
+                <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fas fa-map-marker-alt"></i>
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Weather Location</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
             <div>
                 <i class="far fa-copyright"></i> 2019 | Designed by JY
             </div>

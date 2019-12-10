@@ -84,6 +84,12 @@ label {
     text-align: center;
 }
 
+/* 091219 added for chart */
+/* #sevenHoursForecast {
+    height: 300px;
+    background-color: #ffffff;
+} */
+
 .weather-display-container table {
     table-layout: fixed;
     width: 100%;
