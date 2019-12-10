@@ -36,19 +36,24 @@ $(document).ready(function () {
             let longitude = response["longitude"];
             let latitude = response["latitude"];
             let city = response["city"];
+
+            // added 101219 to get timezone
+            let cityTimeZone = response["timezone"];
+
             // save current local timezone offset to local storage
             localStorage.setItem("localRefTimeZone", response["utc_offset"].slice(0, 3));
 
-            getWeatherDetails(longitude, latitude, city);
+            getWeatherDetails(longitude, latitude, city, cityTimeZone);
         }
     });
 
-    function getWeatherDetails(longitude, latitude, city) {
+    function getWeatherDetails(longitude, latitude, city, cityTimeZone) {
 
         $.ajax({
             type: "GET",
             dataType: "json",
             contentType: "text/plain",
+            // 101219 added timezone as query parameter to get the correct timezone based on DarkSky api
             url: `${proxy}https://api.darksky.net/forecast/33d90799f68e195b57437884fb34e078/${latitude},${longitude}?units=si`,
 
             success: function (response) {
@@ -94,7 +99,7 @@ $(document).ready(function () {
                 }
 
                 // 121019 added to include embedded map
-                $(".modal-body").html(`<iframe width="100%" height="300px" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=${latitude},${longitude}&key=AIzaSyAxfWSblcH15jkAI4XusbQDKNTqT6uuruM"></iframe>`);
+                $("#modal-body-map").html(`<iframe width="100%" height="300px" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=${latitude},${longitude}&key=AIzaSyAxfWSblcH15jkAI4XusbQDKNTqT6uuruM"></iframe>`);
 
                 // Default timezone to compare with (currently set to compare to Singapore)
                 let refTimeZone = localStorage.getItem("localRefTimeZone");
@@ -102,25 +107,20 @@ $(document).ready(function () {
                 // Get current timezone offset
                 let currentTimeZoneOffset = response["offset"];
 
-                // Get time at current location
+                // Get time at current location based on timezone 101219
+                // var currentTimeObject = new Date(response["currently"]["time"]*1000).toLocaleTimeString("en-US", { timeZone: cityTimeZone, hour12: false });
+                var currentTimeObject = moment.unix(response["currently"]["time"]).tz(cityTimeZone).format('YYYY-MM-DD HH:mm A');
 
-                if (parseInt(refTimeZone) > 0) {
-                    var currentTimeObject = new Date(((response["currently"]["time"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000));
-                }
-                else if (parseInt(refTimeZone) < 0) {
-                    var currentTimeObject = new Date(((response["currently"]["time"] - (refTimeZone * 3600) - (currentTimeZoneOffset * 3600)) * 1000));
-                }
+                let currentHour = currentTimeObject.substring(11,13);
 
-                let currentHour = hourMinutes(currentTimeObject.getHours());
+                let currentMinutes = currentTimeObject.substring(14,16);
 
-                let currentMinutes = hourMinutes(currentTimeObject.getMinutes());
-
-                let returnedAntiPostMeridien = antiPostMeridien(currentHour);
+                let returnedAntiPostMeridien = currentTimeObject.substring(17,19);
 
                 $("#amPm").html(currentHour + ":" + currentMinutes + " " + returnedAntiPostMeridien);
 
                 // Get current day
-                let day = new Date(((response["currently"]["time"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000)).getDay();
+                let day = moment(currentTimeObject.substring(0,10)).day();
 
                 // Call the dayOfWeek function
                 var currentDay = dayOfWeek(day);
@@ -143,7 +143,7 @@ $(document).ready(function () {
                         $(`#hour${i}`).html("Now");
                     }
                     else {
-                        $(`#hour${i}`).html(hourMinutes(new Date(((response["hourly"]["data"][i]["time"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000)).getHours()));
+                        $(`#hour${i}`).html(moment.unix(response["hourly"]["data"][i]["time"]).tz(cityTimeZone).format('YYYY-MM-DD HH:mm').substring(11,13));
                     }
 
                     $(`#temp${i}`).html(Math.floor(response["hourly"]["data"][i]["temperature"]) + "&#xb0;");
@@ -160,7 +160,7 @@ $(document).ready(function () {
                 var weatherIconsWeek = [];
 
                 for (var l = 0; l < sevenDaysPrediction.length; l++) {
-                    let currentDayOfWeek = new Date(((sevenDaysPrediction[l]["time"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000)).getDay();
+                    let currentDayOfWeek = new Date(((sevenDaysPrediction[l]["time"]) * 1000)).getDay();
                     let returnedCurrentDayOfWeek = dayOfWeek(currentDayOfWeek);
                     weatherIconsWeek.push(((sevenDaysPrediction[l]["icon"]).replace(/-/g, "_")).toUpperCase());
 
@@ -177,18 +177,16 @@ $(document).ready(function () {
                 // Update the sunrise and sunset time for the day
                 // Sunrise time
                 $(`#sunrise-label`).html("SUNRISE");
-                let sunriseTime = new Date(((response["daily"]["data"][0]["sunriseTime"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000));
+                let sunriseTime = moment.unix(response["daily"]["data"][0]["sunriseTime"]).tz(cityTimeZone).format('YYYY-MM-DD HH:mm A');
 
-                $(`#sunrise-time`).html(hourMinutes(sunriseTime.getHours()) + ":" + hourMinutes(sunriseTime.getMinutes())
-                    + " " + antiPostMeridien(hourMinutes(sunriseTime.getHours())));
+                $(`#sunrise-time`).html(sunriseTime.substring(11,19));
 
                 $("#sunrise-img").attr("src", "./static/images/sunrise.png")
 
                 // Sunset time
                 $(`#sunset-label`).html("SUNSET");
-                let sunsetTime = new Date(((response["daily"]["data"][0]["sunsetTime"] - (refTimeZone * 3600) + (currentTimeZoneOffset * 3600)) * 1000));
-                $(`#sunset-time`).html(hourMinutes(sunsetTime.getHours()) + ":" + hourMinutes(sunsetTime.getMinutes())
-                    + " " + antiPostMeridien(hourMinutes(sunsetTime.getHours())));
+                let sunsetTime = moment.unix(response["daily"]["data"][0]["sunsetTime"]).tz(cityTimeZone).format('YYYY-MM-DD HH:mm A');
+                $(`#sunset-time`).html(sunsetTime.substring(11,19));
 
                 $("#sunset-img").attr("src", "./static/images/sunset.png")
 
@@ -299,27 +297,10 @@ $(document).ready(function () {
 
     });
 
+    // Show the user the past 7 days historical data
 
 
-    // Hour function
-    function hourMinutes(time) {
-        if (time < 10) {
-            return "0" + time.toString();
-        }
-        else {
-            return time.toString();
-        }
-    }
-
-    // Hour association to AM or PM;
-    function antiPostMeridien(hourOfDay) {
-        if ((hourOfDay >= 0) && (hourOfDay <= 11)) {
-            return "AM";
-        }
-        else {
-            return "PM";
-        }
-    }
+    
 
     // Function to associate day returned by API
     function dayOfWeek(day) {
@@ -396,7 +377,11 @@ $(document).ready(function () {
                 // add a logic statement to handle the API query result (API query is successful but no result is returned)
                 if (response["success"] !== false) {
                     let city = response["location"]["name"];
-                    getWeatherDetails(queryLng.toString(), queryLat.toString(), city);
+
+                    // 101219 added to get timezone
+                    let queryTimeZone = response["location"]["timezone_id"];
+
+                    getWeatherDetails(queryLng.toString(), queryLat.toString(), city, queryTimeZone);
                 }
                 else if (response["success"] === false) {
                     alert("Error code: " + response["error"]["code"] + ", Error type: " + response["error"]["type"] + ", Info: " + response["error"]["info"]);
