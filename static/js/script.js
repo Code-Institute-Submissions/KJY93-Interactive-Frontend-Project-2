@@ -40,10 +40,8 @@ $(document).ready(function () {
             // added 101219 to get timezone
             let cityTimeZone = response["timezone"];
 
-            // save current local timezone offset to local storage
-            localStorage.setItem("localRefTimeZone", response["utc_offset"].slice(0, 3));
-
             getWeatherDetails(longitude, latitude, city, cityTimeZone);
+
         }
     });
 
@@ -101,26 +99,99 @@ $(document).ready(function () {
                 // 121019 added to include embedded map
                 $("#modal-body-map").html(`<iframe width="100%" height="300px" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=${latitude},${longitude}&key=AIzaSyAxfWSblcH15jkAI4XusbQDKNTqT6uuruM"></iframe>`);
 
-                // Default timezone to compare with (currently set to compare to Singapore)
-                let refTimeZone = localStorage.getItem("localRefTimeZone");
-
-                // Get current timezone offset
-                let currentTimeZoneOffset = response["offset"];
-
                 // Get time at current location based on timezone 101219
-                // var currentTimeObject = new Date(response["currently"]["time"]*1000).toLocaleTimeString("en-US", { timeZone: cityTimeZone, hour12: false });
                 var currentTimeObject = moment.unix(response["currently"]["time"]).tz(cityTimeZone).format('YYYY-MM-DD HH:mm A');
 
-                let currentHour = currentTimeObject.substring(11,13);
+                // 111219
+                let lastSevenDayUnixFormat = response["currently"]["time"] - (60*60*24*7);
 
-                let currentMinutes = currentTimeObject.substring(14,16);
+                let lastSevenDayDateTimeFormat = moment.unix(lastSevenDayUnixFormat).tz(cityTimeZone).format('YYYY-MM-DD HH:mm A');
 
-                let returnedAntiPostMeridien = currentTimeObject.substring(17,19);
+                // start week date of the previous week
+                localStorage.setItem("DateTimeLocalStoragePW", lastSevenDayDateTimeFormat);
+
+                // current date
+                localStorage.setItem("DateTimeLocalStorageCW", currentTimeObject);
+
+                // 111219 save the longitude and latitude to localStorage so that it could be retrieved later on
+                // localStorage.setItem("countryLon", longitude);
+
+                // localStorage.setItem("countryLat", latitude);
+
+
+            // Get the date of the start of last week (e.g. if today is 11th Dec, 7 days ago would be 4th Dec) 111219
+
+            let startWeekDate = (localStorage.getItem("DateTimeLocalStoragePW")).substring(0,10);
+            let currentDate = (localStorage.getItem("DateTimeLocalStorageCW")).substring(0,10);
+
+            // define an empty array to save the date and temperature value
+            let xDate = [];
+            let yTempCel = [];
+            let yTempFah = [];
+
+            // Do a query to the weather API to get the past 7 days temperature data
+            $.ajax({ 
+                type: "GET",
+                dataType: "json",
+                contentType: "text/plain",
+                url: `http://api.weatherapi.com/v1/history.json?key=9eca6ab9a63f498ba7a130121191012&q=${latitude},${longitude}&dt=${startWeekDate}&end_dt=${currentDate}`,
+
+                success: function (response) {          
+                    for (let ct=0; ct<response["forecast"]["forecastday"].length; ct++) {
+                        xDate.push(response["forecast"]["forecastday"][ct]["date"]);
+                        yTempCel.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_c"]);
+                        yTempFah.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_f"]);
+                    }
+                }
+            })
+
+            var trace1 = {
+                x: xDate,
+                y: yTempCel,
+                mode: 'lines+markers',
+                name: "Avg Temp (Celsius)",
+                marker: {
+                    size: 8
+                }
+            };
+
+            var trace2 = {
+                x: xDate,
+                y: yTempFah,
+                mode: 'lines+markers',
+                name: 'Avg Temp (Fahrenheit)',
+                marker: {
+                    size: 8
+                }
+            };
+
+            var data = [ trace1, trace2 ];
+
+            var layout = {autosize: true, legend: {"orientation": "h"}};
+
+
+
+            $('#pastHistoryData').on('shown.bs.modal', function (e) {
+                Plotly.newPlot('myDiv', data, layout);
+            })
+
+
+
+
+
+
+
+
+                let currentHour = currentTimeObject.substring(11, 13);
+
+                let currentMinutes = currentTimeObject.substring(14, 16);
+
+                let returnedAntiPostMeridien = currentTimeObject.substring(17, 19);
 
                 $("#amPm").html(currentHour + ":" + currentMinutes + " " + returnedAntiPostMeridien);
 
                 // Get current day
-                let day = moment(currentTimeObject.substring(0,10)).day();
+                let day = moment(currentTimeObject.substring(0, 10)).day();
 
                 // Call the dayOfWeek function
                 var currentDay = dayOfWeek(day);
@@ -143,7 +214,7 @@ $(document).ready(function () {
                         $(`#hour${i}`).html("Now");
                     }
                     else {
-                        $(`#hour${i}`).html(moment.unix(response["hourly"]["data"][i]["time"]).tz(cityTimeZone).format('YYYY-MM-DD HH:mm').substring(11,13));
+                        $(`#hour${i}`).html(moment.unix(response["hourly"]["data"][i]["time"]).tz(cityTimeZone).format('YYYY-MM-DD HH:mm').substring(11, 13));
                     }
 
                     $(`#temp${i}`).html(Math.floor(response["hourly"]["data"][i]["temperature"]) + "&#xb0;");
@@ -179,14 +250,14 @@ $(document).ready(function () {
                 $(`#sunrise-label`).html("SUNRISE");
                 let sunriseTime = moment.unix(response["daily"]["data"][0]["sunriseTime"]).tz(cityTimeZone).format('YYYY-MM-DD HH:mm A');
 
-                $(`#sunrise-time`).html(sunriseTime.substring(11,19));
+                $(`#sunrise-time`).html(sunriseTime.substring(11, 19));
 
                 $("#sunrise-img").attr("src", "./static/images/sunrise.png")
 
                 // Sunset time
                 $(`#sunset-label`).html("SUNSET");
                 let sunsetTime = moment.unix(response["daily"]["data"][0]["sunsetTime"]).tz(cityTimeZone).format('YYYY-MM-DD HH:mm A');
-                $(`#sunset-time`).html(sunsetTime.substring(11,19));
+                $(`#sunset-time`).html(sunsetTime.substring(11, 19));
 
                 $("#sunset-img").attr("src", "./static/images/sunset.png")
 
@@ -296,11 +367,6 @@ $(document).ready(function () {
 
 
     });
-
-    // Show the user the past 7 days historical data
-
-
-    
 
     // Function to associate day returned by API
     function dayOfWeek(day) {
