@@ -463,8 +463,12 @@ $(document).ready(function () {
 
                     getWeatherDetails(queryLng.toString(), queryLat.toString(), city, queryTimeZone);
 
+                    // Close the modal once form submitted
+                    $('#countryModal').modal('hide');
+
                     // Clear the HTML form once value is submitted
                     $("#autocomplete").val('');
+
                 }
                 else if (response["success"] === false) {
                     alert("Error code: " + response["error"]["code"] + ", Error type: " + response["error"]["type"] + ", Info: " + response["error"]["info"]);
