@@ -148,11 +148,13 @@ $(document).ready(function () {
                     }
                 })
 
+                console.log(xDate);
+
                 var trace1 = {
                     x: xDate,
                     y: yTempCel,
                     mode: 'lines+markers',
-                    name: "Avg Temp (Celsius)",
+                    name: "℃",
                     marker: {
                         size: 8
                     }
@@ -162,7 +164,7 @@ $(document).ready(function () {
                     x: xDate,
                     y: yTempFah,
                     mode: 'lines+markers',
-                    name: 'Avg Temp (Fahrenheit)',
+                    name: '℉',
                     marker: {
                         size: 8
                     }
@@ -170,7 +172,22 @@ $(document).ready(function () {
 
                 var data = [ trace1, trace2 ];
 
-                var layout = {autosize: true, legend: {"orientation": "h"}};
+                var layout = {
+                    autosize: true, 
+                    // legend: {"orientation": "h"},
+                    title: "Temperature vs Date",                
+                    xaxis: {
+                        title: {
+                            text: 'Date'
+                        },
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Average Temperature (℃ / ℉)'
+                        }
+                    }
+                
+                };
 
 
 
