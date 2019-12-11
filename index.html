@@ -47,11 +47,11 @@
                 <div class="container-fluid navbar-weather-container">
                     <a class="navbar-brand" href="#">WeatherRadar</a>
         
-                    <form class="country-search form-inline my-2 my-lg-0" method="post" action="">
+                    <!-- <form class="country-search form-inline my-2 my-lg-0" method="post" action="">
                         <input id="autocomplete" class="form-control mr-sm-2" type="search" placeholder="Enter a location"
                             required>
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
-                    </form>
+                    </form> -->
                 </div>
             </nav>
         
@@ -60,9 +60,43 @@
                     <div class="col-sm-12">
                         <div id="summary-container">
                             <div id="timezone-section">
-                                <h1 id="city-section"></h1>
-                                <div id="amPm"></div>
+                                <!-- added search button to be at the side of the city -->
+                                <div id="city-search-section">
+                                    <div><h1 id="city-section"></h1></div>
+                                    <div id="submit-button-container">
+                                        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#countryModal">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                                <div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="countryModal" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Locations</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form class="country-search form-inline my-2 my-lg-0" method="post" action="">
+                                                        <input id="autocomplete" class="form-control mr-sm-2" type="search" placeholder="Enter a location"
+                                                            required>
+                                                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Submit</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                             </div>
+
+                            <div id="amPm"></div>
         
                             <div id="weather-section">
                                 <div id="weather-condition"></div>
