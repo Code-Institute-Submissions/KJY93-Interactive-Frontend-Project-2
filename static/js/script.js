@@ -119,67 +119,64 @@ $(document).ready(function () {
                 // localStorage.setItem("countryLat", latitude);
 
 
-            // Get the date of the start of last week (e.g. if today is 11th Dec, 7 days ago would be 4th Dec) 111219
+                // Get the date of the start of last week (e.g. if today is 11th Dec, 7 days ago would be 4th Dec) 111219
 
-            let startWeekDate = (localStorage.getItem("DateTimeLocalStoragePW")).substring(0,10);
-            let currentDate = (localStorage.getItem("DateTimeLocalStorageCW")).substring(0,10);
+                let startWeekDate = (localStorage.getItem("DateTimeLocalStoragePW")).substring(0,10);
+                let currentDate = (localStorage.getItem("DateTimeLocalStorageCW")).substring(0,10);
 
-            // define an empty array to save the date and temperature value
-            let xDate = [];
-            let yTempCel = [];
-            let yTempFah = [];
+                // define an empty array to save the date and temperature value
+                let xDate = [];
+                let yTempCel = [];
+                let yTempFah = [];
 
-            // Do a query to the weather API to get the past 7 days temperature data
-            $.ajax({ 
-                type: "GET",
-                dataType: "json",
-                contentType: "text/plain",
-                url: `http://api.weatherapi.com/v1/history.json?key=9eca6ab9a63f498ba7a130121191012&q=${latitude},${longitude}&dt=${startWeekDate}&end_dt=${currentDate}`,
+                // Do a query to the weather API to get the past 7 days temperature data
+                $.ajax({ 
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "text/plain",
+                    url: `http://api.weatherapi.com/v1/history.json?key=9eca6ab9a63f498ba7a130121191012&q=${latitude},${longitude}&dt=${startWeekDate}&end_dt=${currentDate}`,
 
-                success: function (response) {          
-                    for (let ct=0; ct<response["forecast"]["forecastday"].length; ct++) {
-                        xDate.push(response["forecast"]["forecastday"][ct]["date"]);
-                        yTempCel.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_c"]);
-                        yTempFah.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_f"]);
+                    success: function (response) {          
+                        for (let ct=0; ct<response["forecast"]["forecastday"].length; ct++) {
+                            xDate.push(response["forecast"]["forecastday"][ct]["date"]);
+                            yTempCel.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_c"]);
+                            yTempFah.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_f"]);
+                        }
+
+                        // To display the title for the plot in the modal title section
+                        $("#past7DaysTemperatureTrend").html(`Past one week temperature trend in ${city}`);
                     }
-                }
-            })
+                })
 
-            var trace1 = {
-                x: xDate,
-                y: yTempCel,
-                mode: 'lines+markers',
-                name: "Avg Temp (Celsius)",
-                marker: {
-                    size: 8
-                }
-            };
+                var trace1 = {
+                    x: xDate,
+                    y: yTempCel,
+                    mode: 'lines+markers',
+                    name: "Avg Temp (Celsius)",
+                    marker: {
+                        size: 8
+                    }
+                };
 
-            var trace2 = {
-                x: xDate,
-                y: yTempFah,
-                mode: 'lines+markers',
-                name: 'Avg Temp (Fahrenheit)',
-                marker: {
-                    size: 8
-                }
-            };
+                var trace2 = {
+                    x: xDate,
+                    y: yTempFah,
+                    mode: 'lines+markers',
+                    name: 'Avg Temp (Fahrenheit)',
+                    marker: {
+                        size: 8
+                    }
+                };
 
-            var data = [ trace1, trace2 ];
+                var data = [ trace1, trace2 ];
 
-            var layout = {autosize: true, legend: {"orientation": "h"}};
-
-
-
-            $('#pastHistoryData').on('shown.bs.modal', function (e) {
-                Plotly.newPlot('myDiv', data, layout);
-            })
+                var layout = {autosize: true, legend: {"orientation": "h"}};
 
 
 
-
-
-
+                $('#pastHistoryData').on('shown.bs.modal', function (e) {
+                    Plotly.newPlot('myDiv', data, layout);
+                })
 
 
                 let currentHour = currentTimeObject.substring(11, 13);
