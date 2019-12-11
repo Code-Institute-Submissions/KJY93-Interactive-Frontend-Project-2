@@ -448,6 +448,9 @@ $(document).ready(function () {
                     let queryTimeZone = response["location"]["timezone_id"];
 
                     getWeatherDetails(queryLng.toString(), queryLat.toString(), city, queryTimeZone);
+
+                    // Clear the HTML form once value is submitted
+                    $("#autocomplete").val('');
                 }
                 else if (response["success"] === false) {
                     alert("Error code: " + response["error"]["code"] + ", Error type: " + response["error"]["type"] + ", Info: " + response["error"]["info"]);
