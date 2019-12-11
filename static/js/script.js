@@ -113,12 +113,6 @@ $(document).ready(function () {
                 // current date
                 localStorage.setItem("DateTimeLocalStorageCW", currentTimeObject);
 
-                // 111219 save the longitude and latitude to localStorage so that it could be retrieved later on
-                // localStorage.setItem("countryLon", longitude);
-
-                // localStorage.setItem("countryLat", latitude);
-
-
                 // Get the date of the start of last week (e.g. if today is 11th Dec, 7 days ago would be 4th Dec) 111219
 
                 let startWeekDate = (localStorage.getItem("DateTimeLocalStoragePW")).substring(0,10);
@@ -147,8 +141,6 @@ $(document).ready(function () {
                         $("#past7DaysTemperatureTrend").html(`Past one week temperature trend in ${city}`);
                     }
                 })
-
-                console.log(xDate);
 
                 var trace1 = {
                     x: xDate,
