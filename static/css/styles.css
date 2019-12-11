@@ -115,6 +115,27 @@ label {
     width: 210px; 
 }
 
+#city-search-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#submit-button-container {
+    margin-left: 10px;
+}
+
+#countryModal .modal-header {
+    color: #6c757d;
+}
+
+/* to make google autocomplete to appear in the modal */
+/* solution adapted from https://stackoverflow.com/questions/36110527/google-place-autocomplete-not-showing-in-bootstrap-modal */
+/* set a higher z than the modal so that it can appear */
+.pac-container {
+    z-index: 10000 !important;
+}
+
 /* css to style the loading spinner to appear at the center of the page taken from https://stackoverflow.com/questions/23184747/show-spinner-at-the-center-of-html5-page */
 #loading {
     position: absolute;
