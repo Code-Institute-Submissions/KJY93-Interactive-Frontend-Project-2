@@ -35,7 +35,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.27/moment-timezone-with-data.min.js"></script>
 
-
     <title>Weather Radar</title>
 
 </head>
@@ -314,7 +313,7 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Past 7 days temperature trend</h5>
+                                <h5 class="modal-title" id="past7DaysTemperatureTrend"></h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -324,11 +323,6 @@
                                 <div id="myDiv" style="width:100%;">
                                     <!-- Plotly chart will be drawn inside this DIV -->
                                 </div>
-                            </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
