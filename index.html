@@ -46,12 +46,16 @@
             <nav class="navbar navbar-expand-md navbar-light bg-light">
                 <div class="container-fluid navbar-weather-container">
                     <a class="navbar-brand" href="#">WeatherRadar</a>
-        
-                    <!-- <form class="country-search form-inline my-2 my-lg-0" method="post" action="">
-                        <input id="autocomplete" class="form-control mr-sm-2" type="search" placeholder="Enter a location"
-                            required>
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
-                    </form> -->
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="temp-conversion-container">
+                        <label id="celsius-label" class="btn btn-secondary">
+                            <input type="radio" name="options" id="celsius" autocomplete="off" value="celsius"><span
+                                id="cel-symbol">&#x2103;</span>
+                        </label>
+                        <label id="fahrenheit-label" class="btn btn-secondary">
+                            <input type="radio" name="options" id="fahrenheit" autocomplete="off" value="fahrenheit"><span
+                                id="fah-symbol">&#x2109;</span>
+                        </label>
+                    </div>
                 </div>
             </nav>
         
@@ -327,14 +331,9 @@
                 </div>
             </div>
 
-            <div class="btn-group btn-group-toggle" data-toggle="buttons" id="temp-conversion-container">
-                <label id="celsius-label" class="btn btn-secondary">
-                    <input type="radio" name="options" id="celsius" autocomplete="off" value="celsius"> &#x2103;
-                </label>
-                <label id="fahrenheit-label" class="btn btn-secondary">
-                    <input type="radio" name="options" id="fahrenheit" autocomplete="off" value="fahrenheit"> &#x2109;
-                </label>
-            </div>   
+            <div>
+                <i class="far fa-copyright"></i> 2019 | Designed by JY
+            </div>
 
             <div>
                 <!-- 121019 added -->
