@@ -102,8 +102,8 @@ $(document).ready(function () {
                 // Get time at current location based on timezone 101219
                 var currentTimeObject = moment.unix(response["currently"]["time"]).tz(cityTimeZone).format('YYYY-MM-DD HH:mm A');
 
-                // 111219
-                let lastSevenDayUnixFormat = response["currently"]["time"] - (60*60*24*7);
+                // Past 7 days data inclusive of current date
+                let lastSevenDayUnixFormat = response["currently"]["time"] - (60*60*24*6);
 
                 let lastSevenDayDateTimeFormat = moment.unix(lastSevenDayUnixFormat).tz(cityTimeZone).format('YYYY-MM-DD HH:mm A');
 
@@ -130,7 +130,8 @@ $(document).ready(function () {
                     contentType: "text/plain",
                     url: `http://api.weatherapi.com/v1/history.json?key=9eca6ab9a63f498ba7a130121191012&q=${latitude},${longitude}&dt=${startWeekDate}&end_dt=${currentDate}`,
 
-                    success: function (response) {          
+                    success: function (response) {         
+                        console.log(`http://api.weatherapi.com/v1/history.json?key=9eca6ab9a63f498ba7a130121191012&q=${latitude},${longitude}&dt=${startWeekDate}&end_dt=${currentDate}`); 
                         for (let ct=0; ct<response["forecast"]["forecastday"].length; ct++) {
                             xDate.push(response["forecast"]["forecastday"][ct]["date"]);
                             yTempCel.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_c"]);
@@ -448,6 +449,8 @@ $(document).ready(function () {
             success: function (response) {
                 // add a logic statement to handle the API query result (API query is successful but no result is returned)
                 if (response["success"] !== false) {
+
+                    console.log(`http://api.weatherstack.com/current?access_key=adcf0b574a906d43986d1d8b229ad309&query=${queryLat},${queryLng}`);
                     let city = response["location"]["name"];
 
                     // 101219 added to get timezone
