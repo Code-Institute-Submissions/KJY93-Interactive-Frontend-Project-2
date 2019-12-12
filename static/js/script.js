@@ -301,6 +301,9 @@ $(document).ready(function () {
     // Degree Celcius / Fahrenheit Conversion
     // Default to celcius 
     $("#celsius").attr("checked", "checked");
+
+    // Initial temperature unit is in Celsius, set its color to let user know that the current unit is Celsius
+    $("#cel-symbol").css("color", "#28a745");
     document.getElementById("celsius-label").classList.add("active");
 
     // Add an onclick event listener to toggle between Celsius and Fahrenheit 
@@ -308,6 +311,10 @@ $(document).ready(function () {
         if ($("#celsius").is(":checked") === false) {
             $("#celsius").attr("checked", "checked");
             $("#fahrenheit").removeAttr("checked");
+
+            // Set celsius and fahrenheit symbol color
+            $("#cel-symbol").css("color", "#28a745");
+            $("#fah-symbol").css("color", "#ffffff");
 
             // Convert current temperature to Celsius
             $("#temperature").html(Math.round((parseInt($("#temperature").text()) - 32) / 1.8));
@@ -346,6 +353,10 @@ $(document).ready(function () {
 
             // Convert current temperature to Fahrenheit
             $("#temperature").html(Math.round(parseInt($("#temperature").text()) * 1.8 + 32));
+
+            // Set celsius and fahrenheit symbol color
+            $("#fah-symbol").css("color", "#28a745");
+            $("#cel-symbol").css("color", "#ffffff");
 
 
             // Convert High and Low Temperature section to Fahrenheit
@@ -448,8 +459,6 @@ $(document).ready(function () {
             success: function (response) {
                 // add a logic statement to handle the API query result (API query is successful but no result is returned)
                 if (response["success"] !== false) {
-
-                    console.log(`http://api.weatherstack.com/current?access_key=adcf0b574a906d43986d1d8b229ad309&query=${queryLat},${queryLng}`);
                     let city = response["location"]["name"];
 
                     // 101219 added to get timezone
