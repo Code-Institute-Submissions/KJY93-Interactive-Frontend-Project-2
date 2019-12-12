@@ -166,8 +166,6 @@ $(document).ready(function () {
 
                 var layout = {
                     autosize: true, 
-                    // legend: {"orientation": "h"},
-                    title: "Temperature vs Date",                
                     xaxis: {
                         title: {
                             text: 'Date'
