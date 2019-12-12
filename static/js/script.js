@@ -131,7 +131,6 @@ $(document).ready(function () {
                     url: `http://api.weatherapi.com/v1/history.json?key=9eca6ab9a63f498ba7a130121191012&q=${latitude},${longitude}&dt=${startWeekDate}&end_dt=${currentDate}`,
 
                     success: function (response) {         
-                        console.log(`http://api.weatherapi.com/v1/history.json?key=9eca6ab9a63f498ba7a130121191012&q=${latitude},${longitude}&dt=${startWeekDate}&end_dt=${currentDate}`); 
                         for (let ct=0; ct<response["forecast"]["forecastday"].length; ct++) {
                             xDate.push(response["forecast"]["forecastday"][ct]["date"]);
                             yTempCel.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_c"]);
