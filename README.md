@@ -88,10 +88,10 @@ The color scheme chosen for this web application are as follow:
 - linear gradient for the main body section and this depends on the weather condition returned by the
   API GET query. Snapshots of background color for a clear day, clear night, rain and cloudy are as follow:
 
-![Clear Day](./static/images/clear-day.jpg)
-![Clear Night](./static/images/clear-night.jpg)
-![Clear Day](./static/images/rain.jpg)
-![Clear Day](./static/images/cloudy.jpg)
+![Clear Day](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/clear-day.PNG)
+![Clear Night](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/clear-night.PNG)
+![Rain](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/rain.PNG)
+![Cloudy](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/cloudy.PNG)
 
 ## Technologies Used
 1. HTML5 was the markup language used for structuring the content of the web application
