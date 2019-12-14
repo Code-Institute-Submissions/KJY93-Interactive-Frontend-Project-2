@@ -52,7 +52,7 @@ $(document).ready(function () {
             dataType: "json",
             contentType: "text/plain",
             // 101219 added timezone as query parameter to get the correct timezone based on DarkSky api
-            url: `https://api.darksky.net/forecast/33d90799f68e195b57437884fb34e078/${latitude},${longitude}?units=si`,
+            url: `${proxy}https://api.darksky.net/forecast/33d90799f68e195b57437884fb34e078/${latitude},${longitude}?units=si`,
 
             success: function (response) {
 
@@ -245,7 +245,7 @@ $(document).ready(function () {
             type: "GET",
             dataType: "json",
             contentType: "text/plain",
-            url: `http://api.weatherapi.com/v1/history.json?key=9eca6ab9a63f498ba7a130121191012&q=${latitude},${longitude}&dt=${startWeekDate}&end_dt=${currentDate}`,
+            url: `${proxy}http://api.weatherapi.com/v1/history.json?key=9eca6ab9a63f498ba7a130121191012&q=${latitude},${longitude}&dt=${startWeekDate}&end_dt=${currentDate}`,
 
             success: function (response) {
                 for (let ct = 0; ct < response["forecast"]["forecastday"].length; ct++) {
@@ -435,7 +435,7 @@ $(document).ready(function () {
             dataType: "json",
             contentType: "text/plain",
             // using the weatherstack api to perform a query based on input from user to get location details (timezone offset and city)
-            url: `http://api.weatherstack.com/current?access_key=adcf0b574a906d43986d1d8b229ad309&query=${queryLat},${queryLng}`,
+            url: `${proxy}http://api.weatherstack.com/current?access_key=adcf0b574a906d43986d1d8b229ad309&query=${queryLat},${queryLng}`,
 
             success: function (response) {
                 // add a logic statement to handle the API query result (API query is successful but no result is returned)
