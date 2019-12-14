@@ -131,7 +131,7 @@ The web application was tested and is compatible on Chrome, Opera and Firefox.
 | 2             | When user clicks on the location logo on the bottom left , a map will be popped up  showing the current location with marker that is used to query for the weather data |   Pass     |
 | 3             | When user clicks on the information logo on the bottom right, the past historical weather data will be popped up. The default historical weather display will be 7 days. User will be able to toggle between 3 days, 5 days and 7 days if they wish to. The selected days to display the temperture trend will be displayed in yellow. |    Pass    |
 | 4            |  In the past historical weather data, user will be able to view the min, average, max temperature trend in both Celsius and Fahrenheit | Pass    |
-| 5            | User should see the brand logo on the top left of the navbar, temperature unit toggle on the right of the navbar. | Pass    |
+| 5            | User should see the brand logo on the top left of the navbar (currently the brand logo does not link to anywhere), temperature unit toggle on the right of the navbar. | Pass    |
 | 6           | User should see the location logo at the bottom left of the footer, copyright logo on the center of the footer and information logo on the bottom right of the navbar. | Pass    |
 | 7           | User should see the main body section background-color change. Note, this will depends on the weather condition returned from the API query and the condition to change the background-color as pre-configured in the script.js file | Pass    |
 | 8           | User should see the local time of the location that they have used to query for the weather data. | Pass    |
