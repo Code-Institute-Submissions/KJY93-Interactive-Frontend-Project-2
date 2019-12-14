@@ -88,10 +88,10 @@ The color scheme chosen for this web application are as follow:
 - linear gradient for the main body section and this depends on the weather condition returned by the
   API GET query. Snapshots of background color for a clear day, clear night, rain and cloudy are as follow:
 
-![Clear Day](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/clear-day.PNG) { width: 25%; }
-![Clear Night](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/clear-night.PNG) { width: 25%; }
-![Rain](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/rain.PNG) { width: 25%; }
-![Cloudy](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/cloudy.PNG) { width: 25%; }
+![Clear Day|465x717,20%](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/clear-day.PNG?s=200)
+![Clear Night|465x717,20%](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/clear-night.PNG?s=200) 
+![Rain|465x717,20%](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/rain.PNG?s=200) 
+![Cloudy|465x717,20%](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/cloudy.PNG?s=200)
 
 ## Technologies Used
 1. HTML5 was the markup language used for structuring the content of the web application
