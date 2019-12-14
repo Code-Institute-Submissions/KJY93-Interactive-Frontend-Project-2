@@ -120,8 +120,13 @@ $(document).ready(function () {
 
                 // define an empty array to save the date and temperature value
                 let xDate = [];
-                let yTempCel = [];
-                let yTempFah = [];
+                let yTempCelMin = [];
+                let yTempCelAvg = [];
+                let yTempCelMax = [];
+
+                let yTempFahMin = [];
+                let yTempFahAvg = [];
+                let yTempFahMax = [];
 
                 // Do a query to the weather API to get the past 7 days temperature data
                 $.ajax({ 
@@ -133,8 +138,15 @@ $(document).ready(function () {
                     success: function (response) {         
                         for (let ct=0; ct<response["forecast"]["forecastday"].length; ct++) {
                             xDate.push(response["forecast"]["forecastday"][ct]["date"]);
-                            yTempCel.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_c"]);
-                            yTempFah.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_f"]);
+
+                            yTempCelMin.push(response["forecast"]["forecastday"][ct]["day"]["mintemp_c"]);
+                            yTempFahMin.push(response["forecast"]["forecastday"][ct]["day"]["mintemp_f"]);
+
+                            yTempCelAvg.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_c"]);
+                            yTempFahAvg.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_f"]);
+
+                            yTempCelMax.push(response["forecast"]["forecastday"][ct]["day"]["maxtemp_c"]);
+                            yTempFahMax.push(response["forecast"]["forecastday"][ct]["day"]["maxtemp_f"]);
                         }
 
                         // To display the title for the plot in the modal title section
@@ -144,9 +156,9 @@ $(document).ready(function () {
 
                 var trace1 = {
                     x: xDate,
-                    y: yTempCel,
+                    y: yTempCelAvg,
                     mode: 'lines+markers',
-                    name: "℃",
+                    name: 'Avg (℃)',
                     marker: {
                         size: 8
                     }
@@ -154,15 +166,55 @@ $(document).ready(function () {
 
                 var trace2 = {
                     x: xDate,
-                    y: yTempFah,
+                    y: yTempCelMin,
                     mode: 'lines+markers',
-                    name: '℉',
+                    name: 'Min (℃)',
                     marker: {
                         size: 8
                     }
                 };
 
-                var data = [ trace1, trace2 ];
+                var trace3 = {
+                    x: xDate,
+                    y: yTempCelMax,
+                    mode: 'lines+markers',
+                    name: 'Max (℃)',
+                    marker: {
+                        size: 8
+                    }
+                };
+
+                var trace4 = {
+                    x: xDate,
+                    y: yTempFahAvg,
+                    mode: 'lines+markers',
+                    name: 'Avg (℉)',
+                    marker: {
+                        size: 8
+                    }
+                };
+
+                var trace5 = {
+                    x: xDate,
+                    y: yTempFahMin,
+                    mode: 'lines+markers',
+                    name: 'Min (℉)',
+                    marker: {
+                        size: 8
+                    }
+                };
+
+                var trace6 = {
+                    x: xDate,
+                    y: yTempFahMax,
+                    mode: 'lines+markers',
+                    name: 'Max (℉)',
+                    marker: {
+                        size: 8
+                    }
+                };
+
+                var data = [ trace1, trace2, trace3, trace4, trace5, trace6 ];
 
                 var layout = {
                     autosize: true, 
@@ -173,7 +225,7 @@ $(document).ready(function () {
                     },
                     yaxis: {
                         title: {
-                            text: 'Average Temperature (℃ / ℉)'
+                            text: 'Temperature (℃ / ℉)'
                         }
                     }
                 
