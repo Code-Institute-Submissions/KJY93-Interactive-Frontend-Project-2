@@ -52,7 +52,7 @@ $(document).ready(function () {
             dataType: "json",
             contentType: "text/plain",
             // 101219 added timezone as query parameter to get the correct timezone based on DarkSky api
-            url: `${proxy}https://api.darksky.net/forecast/33d90799f68e195b57437884fb34e078/${latitude},${longitude}?units=si`,
+            url: `https://api.darksky.net/forecast/33d90799f68e195b57437884fb34e078/${latitude},${longitude}?units=si`,
 
             success: function (response) {
 
