@@ -42,7 +42,7 @@ able to able to find the temperature toggle button.
 At the main body section, user will find weather data at the current moment. A little bit down, user will be able to find the weather forecast for the upcoming 7 hours, 7 days and a summary of other weather parameters which includes visibility, UV index, wind speed, just to name a few.  
 
 ### b. Wireframes
-https://drive.google.com/file/d/1nMC_wXdOguFGbg8aPIi22sJvu3RGQ7K_/view?usp=sharing (small screen device)
+https://drive.google.com/file/d/1HsY5j_XmliTh1xy0NItERGpIGtXE0pfj/view?usp=sharing (small screen device)
 https://drive.google.com/file/d/1HsY5j_XmliTh1xy0NItERGpIGtXE0pfj/view?usp=sharing (large screen device)
 
 ## Project Skeleton
