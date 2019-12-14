@@ -2,10 +2,6 @@ body {
     font-family: 'Neucha', cursive, 'Sans-Serif';
 }
 
-h2 {
-    font-size: 1.2em;
-}
-
 hr, #current-day-container {
     width: 100%;
 }
@@ -48,19 +44,23 @@ label {
 }
 
 #amPm, #weather-condition {
-    font-size: 1.3em;
+    font-size: 1.5em;
 }
 
 #daily-temp-summary-container, tr {
-    font-size: 1.2em;
+    font-size: 1.5em;
 }
 
 #city-section {
-    font-size: 1.8em;
+    font-size: 2.2em;
 }
 
 #current-day-container-margin-top {
     margin-top: 0;
+}
+
+#copyright-design {
+    font-size: 1.3em;
 }
 
 #current-day-container {
@@ -107,6 +107,11 @@ label {
 }
 
 .card-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar-weather-container {
     display: flex;
     justify-content: space-between;
 }
@@ -167,10 +172,20 @@ label {
     border-top: 1px solid rgba(0,0,0,.1);
 }
 
-@media (max-width: 575.98px) {
-	.navbar-weather-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-	}
+@media (max-width: 768px) { 
+    #amPm, #weather-condition {
+        font-size: 1.2em;
+    }
+    
+    #daily-temp-summary-container, tr {
+        font-size: 1.2em;
+    }
+    
+    #city-section {
+        font-size: 2.0em;
+    }
+    
+    #copyright-design {
+        font-size: 1.1em;
+    }
 }
