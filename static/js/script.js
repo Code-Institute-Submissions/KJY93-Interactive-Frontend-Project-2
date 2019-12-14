@@ -113,7 +113,7 @@ $(document).ready(function () {
                 // current date
                 localStorage.setItem("DateTimeLocalStorageCW", currentTimeObject);
 
-                // Get the date of the start of last week (e.g. if today is 11th Dec, 7 days ago would be 4th Dec) 111219
+                // Get the date of the start of last week (e.g. if today is 11th Dec, 7 days ago would be 5th Dec, inclusive of 11th Dec itself) 111219
 
                 let startWeekDate = (localStorage.getItem("DateTimeLocalStoragePW")).substring(0,10);
                 let currentDate = (localStorage.getItem("DateTimeLocalStorageCW")).substring(0,10);
