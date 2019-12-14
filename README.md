@@ -88,7 +88,6 @@ The color scheme chosen for this web application are as follow:
 - linear gradient for the main body section and this depends on the weather condition returned by the
   API GET query. Snapshots of background color for a clear day, clear night, rain and cloudy are as follow:
 
-<img src="./img.png" width="100" height="100">
 ![Clear Day|300x463](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/clear-day.PNG)
 ![Clear Night|300x463](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/clear-night.PNG) 
 ![Rain|300x463](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/rain.PNG) 
