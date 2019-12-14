@@ -62,18 +62,18 @@ For longitude:
 For latitude:
 `<input type="hidden" id="lat" name="lat" value=${lat}>`
 
-The WeatherStack API, http://api.weatherstack.com/current?access_key=YOUR_API_KEY&query=latitude,longitude will then use the latitude and longitude value of the above input tag to make a GET query to obtain the weather forecast of that particular location.
+The WeatherStack API, `http://api.weatherstack.com/current?access_key=YOUR_API_KEY&query=latitude,longitude` will then use the latitude and longitude value of the above input tag to make a GET query to obtain the weather forecast of that particular location.
 
 iv. The current time displaying on the weather application is obtained using moment.js based on the unix time format and the timezone of the particular location passed into the moment object.
 
 v. There is an information logo at the bottom right of the weather application. User will be able to click on it and be displayed with the past historical temperature trend. On this plotly plot that is displayed, user will be able to check out the min, average and max temperature in both Celsius and Fahrenheit on the same plot. Another additional feature of this plot is that it enables the user to take a snapshot of the current plot. The past historical weather data is obtained through the Weather API, by far the only API that provides 7 days of free historical temperature trend. The API GET format query used is as follow: 
-- http://api.weatherapi.com/v1/history.json?key=YOUR_API_KEY&q=latitude,longitude&dt=startWeekDate&end_dt=currentDate
+- `http://api.weatherapi.com/v1/history.json?key=YOUR_API_KEY&q=latitude,longitude&dt=startWeekDate&end_dt=currentDate`
 
 vi. For every load of the page, the weather application will detect the user's current location using the ipapi API. The longitude and latitude coordinates is then passed to DarkSky API to obtain the weather data of that particular location the user is currently in.
 The ipapi and DarkSky API GET query is as follow: 
-- https://ipapi.co/json/
-- https://api.darksky.net/forecast/YOUR_API_KEY/latitude,longitude?units=si
-Note: CORS proxy (https://cors-anywhere.herokuapp.com/) is preceded at every API query to enable cross origin request.
+- `https://ipapi.co/json/`
+- `https://api.darksky.net/forecast/YOUR_API_KEY/latitude,longitude?units=si`
+Note: CORS proxy (`https://cors-anywhere.herokuapp.com/`) is preceded at every API query to enable cross origin request.
 
 vii. The background of the weather application will change according to the weather condition returned from the JSON object from DarkSky. Currently, the weather condition that I have configured for the background color change are cloudy, clear-day, clear-night, rain, sleet and snow.
 
