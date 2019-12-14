@@ -103,7 +103,7 @@ $(document).ready(function () {
                 var currentTimeObject = moment.unix(response["currently"]["time"]).tz(cityTimeZone).format('YYYY-MM-DD HH:mm A');
 
                 // Past 7 days data inclusive of current date
-                let lastSevenDayUnixFormat = response["currently"]["time"] - (60*60*24*6);
+                let lastSevenDayUnixFormat = response["currently"]["time"] - (60 * 60 * 24 * 6);
 
                 let lastSevenDayDateTimeFormat = moment.unix(lastSevenDayUnixFormat).tz(cityTimeZone).format('YYYY-MM-DD HH:mm A');
 
@@ -113,289 +113,14 @@ $(document).ready(function () {
                 // current date
                 localStorage.setItem("DateTimeLocalStorageCW", currentTimeObject);
 
-                // Get the date of the start of last week (e.g. if today is 11th Dec, 7 days ago would be 5th Dec, inclusive of 11th Dec itself) 111219
+                // Save the longitude and latitude to local Storage
+                localStorage.setItem("lng_coordinates", longitude);
 
-                let startWeekDate = (localStorage.getItem("DateTimeLocalStoragePW")).substring(0,10);
-                let currentDate = (localStorage.getItem("DateTimeLocalStorageCW")).substring(0,10);
+                // current date
+                localStorage.setItem("lat_coordinates", latitude);
 
-                // define an empty array to save the date and temperature value
-                let xDate = [];
-                let yTempCelMin = [];
-                let yTempCelAvg = [];
-                let yTempCelMax = [];
-
-                let yTempFahMin = [];
-                let yTempFahAvg = [];
-                let yTempFahMax = [];
-
-                // Default selection - Past 7 Days Data
-
-                $("#option7Days").attr("checked", "checked");
-
-                $("#option7Days-label").css("color", "#ffff33");
-
-                document.getElementById("option7Days-label").classList.add("active");
-
-
-                // Do a query to the weather API to get the past 7 days temperature data
-                $.ajax({ 
-                    type: "GET",
-                    dataType: "json",
-                    contentType: "text/plain",
-                    url: `http://api.weatherapi.com/v1/history.json?key=9eca6ab9a63f498ba7a130121191012&q=${latitude},${longitude}&dt=${startWeekDate}&end_dt=${currentDate}`,
-
-                    success: function (response) {         
-                        for (let ct=0; ct<response["forecast"]["forecastday"].length; ct++) {
-                            xDate.push(response["forecast"]["forecastday"][ct]["date"]);
-
-                            yTempCelMin.push(response["forecast"]["forecastday"][ct]["day"]["mintemp_c"]);
-                            yTempFahMin.push(response["forecast"]["forecastday"][ct]["day"]["mintemp_f"]);
-
-                            yTempCelAvg.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_c"]);
-                            yTempFahAvg.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_f"]);
-
-                            yTempCelMax.push(response["forecast"]["forecastday"][ct]["day"]["maxtemp_c"]);
-                            yTempFahMax.push(response["forecast"]["forecastday"][ct]["day"]["maxtemp_f"]);
-                        }
-                    }
-                })
-
-                // To display the title for the plot in the modal title section - default option
-                let sevenDays = $("#option7Days-label").text();
-                $("#past7DaysTemperatureTrend").html(`${sevenDays} temperature trend in ${city}`);
-
-                function historicalWeatherData(xDate, yTempCelAvg, yTempCelMin, yTempCelMax, yTempFahMin, yTempFahAvg, yTempFahMax) {
-                    var trace1 = {
-                        x: xDate,
-                        y: yTempCelAvg,
-                        mode: 'lines+markers',
-                        name: 'Avg (℃)',
-                        marker: {
-                            size: 8
-                        }
-                    };
-    
-                    var trace2 = {
-                        x: xDate,
-                        y: yTempCelMin,
-                        mode: 'lines+markers',
-                        name: 'Min (℃)',
-                        marker: {
-                            size: 8
-                        }
-                    };
-    
-                    var trace3 = {
-                        x: xDate,
-                        y: yTempCelMax,
-                        mode: 'lines+markers',
-                        name: 'Max (℃)',
-                        marker: {
-                            size: 8
-                        }
-                    };
-    
-                    var trace4 = {
-                        x: xDate,
-                        y: yTempFahAvg,
-                        mode: 'lines+markers',
-                        name: 'Avg (℉)',
-                        marker: {
-                            size: 8
-                        }
-                    };
-    
-                    var trace5 = {
-                        x: xDate,
-                        y: yTempFahMin,
-                        mode: 'lines+markers',
-                        name: 'Min (℉)',
-                        marker: {
-                            size: 8
-                        }
-                    };
-    
-                    var trace6 = {
-                        x: xDate,
-                        y: yTempFahMax,
-                        mode: 'lines+markers',
-                        name: 'Max (℉)',
-                        marker: {
-                            size: 8
-                        }
-                    };
-
-                    let data = [ trace1, trace2, trace3, trace4, trace5, trace6 ];
-
-                    return data;
-    
-                };
-
-                var layout = {
-                    autosize: true, 
-                    xaxis: {
-                        title: {
-                            text: 'Date'
-                        },
-                    },
-                    yaxis: {
-                        title: {
-                            text: 'Temperature (℃ / ℉)'
-                        }
-                    }
-                
-                };
-
-                let result = historicalWeatherData(xDate, yTempCelAvg, yTempCelMin, yTempCelMax, yTempFahMin, yTempFahAvg, yTempFahMax);
-
-                $('#pastHistoryData').on('shown.bs.modal', function (e) {
-                    Plotly.newPlot('myDiv', result, layout);
-                })
-                
-                // Toggle between 3 days, 5 days and 7 days temperature trend
-                // Past 3 days
-                $("#option3Days-label").click(function () {
-                    if ($("#option3Days").is(":checked") === false) {
-
-                        let threeDays = $("#option3Days-label").text();
-                        $("#past7DaysTemperatureTrend").html(`${threeDays} temperature trend in ${city}`);
-                        $("#option3Days").attr("checked", "checked");
-                        $("#option5Days").removeAttr("checked");
-                        $("#option7Days").removeAttr("checked");
-            
-                        // Set the days selected color
-                        $("#option3Days-label").css("color", "#ffff33");
-                        $("#option5Days-label").css("color", "#ffffff");
-                        $("#option7Days-label").css("color", "#ffffff");
-
-                        let past3Days = historicalWeatherData(xDate.slice(4,7), yTempCelAvg.slice(4,7), yTempCelMin.slice(4,7), yTempCelMax.slice(4,7), yTempFahMin.slice(4,7), yTempFahAvg.slice(4,7), yTempFahMax.slice(4,7))
-                        var layout = {
-                            autosize: true, 
-                            xaxis: {
-                                title: {
-                                    text: 'Date'
-                                },
-                            },
-                            yaxis: {
-                                title: {
-                                    text: 'Temperature (℃ / ℉)'
-                                }
-                            }
-                        
-                        };
-                        
-                        Plotly.newPlot('myDiv', past3Days, layout);
-                    }
-                });
-
-                // Past 5 days
-                $("#option5Days-label").click(function () {
-                    if ($("#option5Days").is(":checked") === false) {
-
-                        let fiveDays = $("#option5Days-label").text();
-                        $("#past7DaysTemperatureTrend").html(`${fiveDays} temperature trend in ${city}`);
-                        $("#option5Days").attr("checked", "checked");
-                        $("#option3Days").removeAttr("checked");
-                        $("#option7Days").removeAttr("checked");
-            
-                        // Set the days selected color
-                        $("#option3Days-label").css("color", "#ffffff");
-                        $("#option5Days-label").css("color", "#ffff33");
-                        $("#option7Days-label").css("color", "#ffffff");
-
-                        let past5Days = historicalWeatherData(xDate.slice(2,7), yTempCelAvg.slice(2,7), yTempCelMin.slice(2,7), yTempCelMax.slice(2,7), yTempFahMin.slice(2,7), yTempFahAvg.slice(2,7), yTempFahMax.slice(2,7))
-                        var layout = {
-                            autosize: true, 
-                            xaxis: {
-                                title: {
-                                    text: 'Date'
-                                },
-                            },
-                            yaxis: {
-                                title: {
-                                    text: 'Temperature (℃ / ℉)'
-                                }
-                            }
-                        
-                        };
-                        
-                        Plotly.newPlot('myDiv', past5Days, layout);
-                    }
-                });
-
-                // Past 7 days
-                $("#option7Days-label").click(function () {
-                    if ($("#option7Days").is(":checked") === false) {
-
-                        let pastSevenDays = $("#option7Days-label").text();
-                        $("#past7DaysTemperatureTrend").html(`${pastSevenDays} temperature trend in ${city}`);
-                        $("#option7Days").attr("checked", "checked");
-                        $("#option3Days").removeAttr("checked");
-                        $("#option5Days").removeAttr("checked");
-            
-                        // Set the days selected color
-                        $("#option3Days-label").css("color", "#ffffff");
-                        $("#option5Days-label").css("color", "#ffffff");
-                        $("#option7Days-label").css("color", "#ffff33");
-
-                        let past7Days = historicalWeatherData(xDate, yTempCelAvg, yTempCelMin, yTempCelMax, yTempFahMin, yTempFahAvg, yTempFahMax)
-                        var layout = {
-                            autosize: true, 
-                            xaxis: {
-                                title: {
-                                    text: 'Date'
-                                },
-                            },
-                            yaxis: {
-                                title: {
-                                    text: 'Temperature (℃ / ℉)'
-                                }
-                            }
-                        
-                        };
-                        
-                        Plotly.newPlot('myDiv', past7Days, layout);
-                    }
-                });
-
-                // Reset temperature trend to 7 days if modal is closed
-                $('#pastHistoryData').on('hidden.bs.modal', function (e) {
-
-                    document.getElementById("option7Days-label").classList.add("active");
-                    document.getElementById("option3Days-label").classList.remove("active");
-                    document.getElementById("option5Days-label").classList.remove("active");
-
-                    let resetPastSevenDays = $("#option7Days-label").text();
-                    $("#past7DaysTemperatureTrend").html(`${resetPastSevenDays} temperature trend in ${city}`);
-                    $("#option7Days").attr("checked", "checked");
-                    $("#option3Days").removeAttr("checked");
-                    $("#option5Days").removeAttr("checked");
-
-                    // Reset the days selected color
-                    $("#option3Days-label").css("color", "#ffffff");
-                    $("#option5Days-label").css("color", "#ffffff");
-                    $("#option7Days-label").css("color", "#ffff33");
-
-                    let resetPast7Days = historicalWeatherData(xDate, yTempCelAvg, yTempCelMin, yTempCelMax, yTempFahMin, yTempFahAvg, yTempFahMax)
-                    var layout = {
-                        autosize: true, 
-                        xaxis: {
-                            title: {
-                                text: 'Date'
-                            },
-                        },
-                        yaxis: {
-                            title: {
-                                text: 'Temperature (℃ / ℉)'
-                            }
-                        }
-                    
-                    };
-
-                    Plotly.newPlot('myDiv', resetPast7Days, layout);
-                })
-
-
+                // save the current city to local Storage
+                localStorage.setItem("currentCity", city);
 
                 let currentHour = currentTimeObject.substring(11, 13);
 
@@ -685,9 +410,309 @@ $(document).ready(function () {
                 else if (response["success"] === false) {
                     alert("Error code: " + response["error"]["code"] + ", Error type: " + response["error"]["type"] + ", Info: " + response["error"]["info"]);
                 }
+            },
+            // alert the user on the error response code if the API query fails
+            error: function (request, status, error) {
+                alert(request.responseText);
             }
 
         });
 
     })
+
+
+    $("#info-button").click(function () {
+        // define an empty array to save the date and temperature value
+        let xDate = [];
+        let yTempCelMin = [];
+        let yTempCelAvg = [];
+        let yTempCelMax = [];
+
+        let yTempFahMin = [];
+        let yTempFahAvg = [];
+        let yTempFahMax = [];
+
+        // Default selection - Past 7 Days Data
+
+        $("#option7Days").attr("checked", "checked");
+
+        $("#option7Days-label").css("color", "#ffff33");
+
+        document.getElementById("option7Days-label").classList.add("active");
+
+        // Get longitude and latitude data from localstorage
+        let lngValue = localStorage.getItem("longitude");
+        let latValue = localStorage.getItem("latitude");
+
+        // Get the date of the start of last week (e.g. if today is 11th Dec, 7 days ago would be 5th Dec, inclusive of 11th Dec itself) 111219
+
+        let startWeekDate = (localStorage.getItem("DateTimeLocalStoragePW")).substring(0, 10);
+        let currentDate = (localStorage.getItem("DateTimeLocalStorageCW")).substring(0, 10);
+
+        // Get city name
+        let weatherLocation = localStorage.getItem("currentCity");
+
+        // Do a query to the weather API to get the past 7 days temperature data
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            contentType: "text/plain",
+            url: `http://api.weatherapi.com/v1/history.json?key=9eca6ab9a63f498ba7a130121191012&q=${latValue},${lngValue}&dt=${startWeekDate}&end_dt=${currentDate}`,
+
+            success: function (response) {
+                for (let ct = 0; ct < response["forecast"]["forecastday"].length; ct++) {
+                    xDate.push(response["forecast"]["forecastday"][ct]["date"]);
+
+                    yTempCelMin.push(response["forecast"]["forecastday"][ct]["day"]["mintemp_c"]);
+                    yTempFahMin.push(response["forecast"]["forecastday"][ct]["day"]["mintemp_f"]);
+
+                    yTempCelAvg.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_c"]);
+                    yTempFahAvg.push(response["forecast"]["forecastday"][ct]["day"]["avgtemp_f"]);
+
+                    yTempCelMax.push(response["forecast"]["forecastday"][ct]["day"]["maxtemp_c"]);
+                    yTempFahMax.push(response["forecast"]["forecastday"][ct]["day"]["maxtemp_f"]);
+                }
+            },
+            // alert the user on the error response code if the API query fails
+            error: function (request, status, error) {
+                alert(request.responseText);
+            }
+
+        })
+
+        // To display the title for the plot in the modal title section - default option
+        let sevenDays = $("#option7Days-label").text();
+        $("#past7DaysTemperatureTrend").html(`${sevenDays} temperature trend in ${weatherLocation}`);
+
+        function historicalWeatherData(xDate, yTempCelAvg, yTempCelMin, yTempCelMax, yTempFahMin, yTempFahAvg, yTempFahMax) {
+            var trace1 = {
+                x: xDate,
+                y: yTempCelAvg,
+                mode: 'lines+markers',
+                name: 'Avg (℃)',
+                marker: {
+                    size: 8
+                }
+            };
+
+            var trace2 = {
+                x: xDate,
+                y: yTempCelMin,
+                mode: 'lines+markers',
+                name: 'Min (℃)',
+                marker: {
+                    size: 8
+                }
+            };
+
+            var trace3 = {
+                x: xDate,
+                y: yTempCelMax,
+                mode: 'lines+markers',
+                name: 'Max (℃)',
+                marker: {
+                    size: 8
+                }
+            };
+
+            var trace4 = {
+                x: xDate,
+                y: yTempFahAvg,
+                mode: 'lines+markers',
+                name: 'Avg (℉)',
+                marker: {
+                    size: 8
+                }
+            };
+
+            var trace5 = {
+                x: xDate,
+                y: yTempFahMin,
+                mode: 'lines+markers',
+                name: 'Min (℉)',
+                marker: {
+                    size: 8
+                }
+            };
+
+            var trace6 = {
+                x: xDate,
+                y: yTempFahMax,
+                mode: 'lines+markers',
+                name: 'Max (℉)',
+                marker: {
+                    size: 8
+                }
+            };
+
+            let data = [trace1, trace2, trace3, trace4, trace5, trace6];
+
+            return data;
+
+        };
+
+        var layout = {
+            autosize: true,
+            xaxis: {
+                title: {
+                    text: 'Date'
+                },
+            },
+            yaxis: {
+                title: {
+                    text: 'Temperature (℃ / ℉)'
+                }
+            }
+
+        };
+
+        let result = historicalWeatherData(xDate, yTempCelAvg, yTempCelMin, yTempCelMax, yTempFahMin, yTempFahAvg, yTempFahMax);
+
+        $('#pastHistoryData').on('shown.bs.modal', function (e) {
+            Plotly.newPlot('myDiv', result, layout);
+        })
+
+        // Toggle between 3 days, 5 days and 7 days temperature trend
+        // Past 3 days
+        $("#option3Days-label").click(function () {
+            if ($("#option3Days").is(":checked") === false) {
+
+                let threeDays = $("#option3Days-label").text();
+                $("#past7DaysTemperatureTrend").html(`${threeDays} temperature trend in ${weatherLocation}`);
+                $("#option3Days").attr("checked", "checked");
+                $("#option5Days").removeAttr("checked");
+                $("#option7Days").removeAttr("checked");
+
+                // Set the days selected color
+                $("#option3Days-label").css("color", "#ffff33");
+                $("#option5Days-label").css("color", "#ffffff");
+                $("#option7Days-label").css("color", "#ffffff");
+
+                let past3Days = historicalWeatherData(xDate.slice(4, 7), yTempCelAvg.slice(4, 7), yTempCelMin.slice(4, 7), yTempCelMax.slice(4, 7), yTempFahMin.slice(4, 7), yTempFahAvg.slice(4, 7), yTempFahMax.slice(4, 7))
+                var layout = {
+                    autosize: true,
+                    xaxis: {
+                        title: {
+                            text: 'Date'
+                        },
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Temperature (℃ / ℉)'
+                        }
+                    }
+
+                };
+
+                Plotly.newPlot('myDiv', past3Days, layout);
+            }
+        });
+
+        // Past 5 days
+        $("#option5Days-label").click(function () {
+            if ($("#option5Days").is(":checked") === false) {
+
+                let fiveDays = $("#option5Days-label").text();
+                $("#past7DaysTemperatureTrend").html(`${fiveDays} temperature trend in ${weatherLocation}`);
+                $("#option5Days").attr("checked", "checked");
+                $("#option3Days").removeAttr("checked");
+                $("#option7Days").removeAttr("checked");
+
+                // Set the days selected color
+                $("#option3Days-label").css("color", "#ffffff");
+                $("#option5Days-label").css("color", "#ffff33");
+                $("#option7Days-label").css("color", "#ffffff");
+
+                let past5Days = historicalWeatherData(xDate.slice(2, 7), yTempCelAvg.slice(2, 7), yTempCelMin.slice(2, 7), yTempCelMax.slice(2, 7), yTempFahMin.slice(2, 7), yTempFahAvg.slice(2, 7), yTempFahMax.slice(2, 7))
+                var layout = {
+                    autosize: true,
+                    xaxis: {
+                        title: {
+                            text: 'Date'
+                        },
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Temperature (℃ / ℉)'
+                        }
+                    }
+
+                };
+
+                Plotly.newPlot('myDiv', past5Days, layout);
+            }
+        });
+
+        // Past 7 days
+        $("#option7Days-label").click(function () {
+            if ($("#option7Days").is(":checked") === false) {
+
+                let pastSevenDays = $("#option7Days-label").text();
+                $("#past7DaysTemperatureTrend").html(`${pastSevenDays} temperature trend in ${weatherLocation}`);
+                $("#option7Days").attr("checked", "checked");
+                $("#option3Days").removeAttr("checked");
+                $("#option5Days").removeAttr("checked");
+
+                // Set the days selected color
+                $("#option3Days-label").css("color", "#ffffff");
+                $("#option5Days-label").css("color", "#ffffff");
+                $("#option7Days-label").css("color", "#ffff33");
+
+                let past7Days = historicalWeatherData(xDate, yTempCelAvg, yTempCelMin, yTempCelMax, yTempFahMin, yTempFahAvg, yTempFahMax)
+                var layout = {
+                    autosize: true,
+                    xaxis: {
+                        title: {
+                            text: 'Date'
+                        },
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Temperature (℃ / ℉)'
+                        }
+                    }
+
+                };
+
+                Plotly.newPlot('myDiv', past7Days, layout);
+            }
+        });
+
+        // Reset temperature trend to 7 days if modal is closed
+        $('#pastHistoryData').on('hidden.bs.modal', function (e) {
+
+            document.getElementById("option7Days-label").classList.add("active");
+            document.getElementById("option3Days-label").classList.remove("active");
+            document.getElementById("option5Days-label").classList.remove("active");
+
+            let resetPastSevenDays = $("#option7Days-label").text();
+            $("#past7DaysTemperatureTrend").html(`${resetPastSevenDays} temperature trend in ${weatherLocation}`);
+            $("#option7Days").attr("checked", "checked");
+            $("#option3Days").removeAttr("checked");
+            $("#option5Days").removeAttr("checked");
+
+            // Reset the days selected color
+            $("#option3Days-label").css("color", "#ffffff");
+            $("#option5Days-label").css("color", "#ffffff");
+            $("#option7Days-label").css("color", "#ffff33");
+
+            let resetPast7Days = historicalWeatherData(xDate, yTempCelAvg, yTempCelMin, yTempCelMax, yTempFahMin, yTempFahAvg, yTempFahMax)
+            var layout = {
+                autosize: true,
+                xaxis: {
+                    title: {
+                        text: 'Date'
+                    },
+                },
+                yaxis: {
+                    title: {
+                        text: 'Temperature (℃ / ℉)'
+                    }
+                }
+
+            };
+
+            Plotly.newPlot('myDiv', resetPast7Days, layout);
+        })
+    });
 })
