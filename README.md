@@ -88,6 +88,7 @@ The color scheme chosen for this web application are as follow:
 - linear gradient for the main body section and this depends on the weather condition returned by the
   API GET query. Snapshots of background color for a clear day, clear night, rain and cloudy are as follow:
 
+<img src="./img.png" width="100" height="100">
 ![Clear Day|300x463](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/clear-day.PNG)
 ![Clear Night|300x463](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/clear-night.PNG) 
 ![Rain|300x463](https://github.com/KJY93/Interactive-Frontend-Project-2/blob/master/static/images/rain.PNG) 
@@ -124,7 +125,7 @@ The web application was tested and is compatible on Chrome, Opera and Firefox.
 
 ### Test Cases
 | Test Case     | Description                   | Outcome  |
-| ------------- |:-----------------------------:| --------:|
+| ------------- |-----------------------------  | -------- |
 | 1             |  When user clicks on <br> temperature toggle button <br>, the temperature data will toggle <br> between Celsius and Fahrenheit. <br> The selected temperature unit <br> will be displayed in green. | Pass    |
 | 2             | When user clicks on <br> the location logo on the bottom left <br>, a map will be popped up <br> showing the current location <br> with marker that is used to query for the weather data |   Pass     |
 | 3             | When user clicks on <br> the information logo on the bottom right <br>, the past historical weather data <br> will be
