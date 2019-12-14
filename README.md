@@ -6,8 +6,8 @@ This project focuses on the development of a sleek and minimalistic weather appl
 Combining 3 weather APIs (DarkSky, WeatherStack, Weather), IP address API (ipapi) and the Google Maps API itself, this weather application made it easy for users to check for the past, current and upcoming weather forecast of any country at any point of time.
 
 ## Demo
-https://kjy93.github.io/Interactive-Frontend-Project-2/
-https://youtu.be/yqESfU-TCAo
+- https://kjy93.github.io/Interactive-Frontend-Project-2/
+- https://youtu.be/yqESfU-TCAo
 
 ## Project Strategy and Scope
 ### User stories
