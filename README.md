@@ -72,7 +72,7 @@ vi. For every load of the page, the weather application will detect the user's c
 The ipapi and DarkSky API GET query is as follow: 
 - https://ipapi.co/json/
 - https://api.darksky.net/forecast/YOUR_API_KEY/latitude,longitude?units=si
-Note: To get around the CORS error during the DarkSky API query, the API query has to be preceded with https://cors-anywhere.herokuapp.com/ API to enable cross origin request.
+Note: CORS proxy (https://cors-anywhere.herokuapp.com/) is preceded at every API query to enable cross origin request.
 
 vii. The background of the weather application will change according to the weather condition returned from the JSON object from DarkSky. Currently, the weather condition that I have configured for the background color change are cloudy, clear-day, clear-night, rain, sleet and snow.
 
