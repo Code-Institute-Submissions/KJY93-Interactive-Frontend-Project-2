@@ -20,8 +20,8 @@ Combining 3 weather APIs (DarkSky, WeatherStack, Weather), IP address API (ipapi
 3. User would like to know the temperature in Celsius / Fahrenheit
    Features to implement: To include a toggle button that allows user to toggle between different temperture units
 
-4. User would like to know the past 7 days temperature data in the location that they have searched for
-   Features to implement: To include a plot showing the user the temperature trend for the past 7 days
+4. User would like to know the past historical temperature data in the location that they have searched for
+   Features to implement: To include a plot showing the user the temperature trend for the past 3 days, 5 days and 7 days
 
 5. User would like to know the current time at the location that they have used to query for the weather data
    Features to implement: To include the local time of the location that they have used to query for the weather data
@@ -66,7 +66,7 @@ The WeatherStack API, http://api.weatherstack.com/current?access_key=YOUR_API_KE
 
 iv. The current time displaying on the weather application is obtained using moment.js based on the unix time format and the timezone of the particular location passed into the moment object.
 
-v. There is an information logo at the bottom right of the weather application. User will be able to click on it and be displayed with the past 7 days temperature trend. On this plotly plot that is displayed, user will be able to check out the min, average and max temperature in both Celsius and Fahrenheit on the same plot. Another additional feature of this plot is that it enables the user to take a snapshot of the current plot. The past 7 days weather data is obtained through the Weather API, by far the only API that provides 7 days of free historical temperature trend. The API GET format query used is as follow: 
+v. There is an information logo at the bottom right of the weather application. User will be able to click on it and be displayed with the past historical temperature trend. On this plotly plot that is displayed, user will be able to check out the min, average and max temperature in both Celsius and Fahrenheit on the same plot. Another additional feature of this plot is that it enables the user to take a snapshot of the current plot. The past historical weather data is obtained through the Weather API, by far the only API that provides 7 days of free historical temperature trend. The API GET format query used is as follow: 
 - http://api.weatherapi.com/v1/history.json?key=YOUR_API_KEY&q=latitude,longitude&dt=startWeekDate&end_dt=currentDate
 
 vi. For every load of the page, the weather application will detect the user's current location using the ipapi API. The longitude and latitude coordinates is then passed to DarkSky API to obtain the weather data of that particular location the user is currently in.
