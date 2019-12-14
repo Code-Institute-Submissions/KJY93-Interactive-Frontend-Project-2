@@ -112,8 +112,10 @@ The color scheme chosen for this web application are as follow:
 4. Weather API - https://www.weatherapi.com/
 5. Google Maps API - https://developers.google.com/maps/documentation/javascript/places
 
-Note: There are 3 weather APIs being used. DarkSky itself does not show the city in its
-JSON result, therefore WeatherStack API is needed to get the city name to be displayed in the web application. Weather API, on the other hand, is used due to the fact that it is the only free API that can provide free historical weather data.
+Note: 
+- There are 3 weather APIs being used. DarkSky itself does not show the city in its JSON result, therefore WeatherStack API is needed to get the city name to be displayed in the web application. Weather API, on the other hand, is used due to the fact that it is the only free API that can provide free historical weather data.
+
+- Error response code are added for the WeatherStack API and Weather API. Did not manage to find the error code response for DarkSky API and ipapi in their documentations.
 
 ## Testing 
 ### Responsiveness
