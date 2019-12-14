@@ -126,17 +126,15 @@ The web application was tested and is compatible on Chrome, Opera and Firefox.
 ### Test Cases
 | Test Case     | Description                   | Outcome  |
 | ------------- |-----------------------------  | -------- |
-| 1             |  When user clicks on <br> temperature toggle button <br>, the temperature data will toggle <br> between Celsius and Fahrenheit. <br> The selected temperature unit <br> will be displayed in green. | Pass    |
-| 2             | When user clicks on <br> the location logo on the bottom left <br>, a map will be popped up <br> showing the current location <br> with marker that is used to query for the weather data |   Pass     |
-| 3             | When user clicks on <br> the information logo on the bottom right <br>, the past historical weather data <br> will be
-popped up. The default historical <br> weather display will be 7 days. <br> User will be able to toggle between 3 days, <br>, 5 days and
-7 days <br> if they wish to. The selected days to display the temperture <br> trend will be displayed in yellow. |    Pass    |
-| 4            |  In the past historical weather data <br>, user will be able to view the min, <br> average, max temperature trend in <br> both Celsius and Fahrenheit | Pass    |
-| 5            | User should see the brand logo<br> on the top left of the navbar,<br> temperature unit toggle on the right of the navbar. | Pass    |
-| 6           | User should see the location logo<br> at the bottom left of the footer<br>, copyright logo on the center of the footer<br>
-and information logo on the bottom right<br> of the navbar. | Pass    |
-| 7           | User should see the main body <br> section background-color change.<br> Note, this will depends on the<br> weather condition returned from the<br> API query and the condition<br> to change the background-color<br> as pre-configured in the script.js file | Pass    |
-| 8           | User should see the local time<br> of the location that they<br> have used to query for the weather data. | Pass    |
+| 1             |  When user clicks on temperature toggle button, the temperature data will toggle between Celsius and Fahrenheit. The selected temperature unit will be displayed in green. | Pass    |
+| 2             | When user clicks on the location logo on the bottom left , a map will be popped up  showing the current location with marker that is used to query for the weather data |   Pass     |
+| 3             | When user clicks on the information logo on the bottom right, the past historical weather data will be popped up. The default historical weather display will be 7 days. User will be able to toggle between 3 days, 5 days and 7 days if they wish to. The selected days to display the temperture trend will be displayed in yellow. |    Pass    |
+| 4            |  In the past historical weather data, user will be able to view the min, average, max temperature trend in both Celsius and Fahrenheit | Pass    |
+| 5            | User should see the brand logo on the top left of the navbar, temperature unit toggle on the
+right of the navbar. | Pass    |
+| 6           | User should see the location logo at the bottom left of the footer, copyright logo on the center of the footer and information logo on the bottom right of the navbar. | Pass    |
+| 7           | User should see the main body section background-color change. Note, this will depends on the weather condition returned from the API query and the condition to change the background-color as pre-configured in the script.js file | Pass    |
+| 8           | User should see the local time of the location that they have used to query for the weather data. | Pass    |
 
 ## Bugs Discovered
 No bugs found.
