@@ -715,27 +715,9 @@ $(document).ready(function () {
             $("#option5Days").removeAttr("checked");
 
             // // Reset the days selected color
-            // $("#option3Days-label").css("color", "#ffffff");
-            // $("#option5Days-label").css("color", "#ffffff");
-            // $("#option7Days-label").css("color", "#ffff33");
-
-            // let resetPast7Days = historicalWeatherData(xDate, yTempCelAvg, yTempCelMin, yTempCelMax, yTempFahMin, yTempFahAvg, yTempFahMax)
-            // var layout = {
-            //     autosize: true,
-            //     xaxis: {
-            //         title: {
-            //             text: 'Date'
-            //         },
-            //     },
-            //     yaxis: {
-            //         title: {
-            //             text: 'Temperature (℃ / ℉)'
-            //         }
-            //     }
-
-            // };
-
-            // Plotly.newPlot('myDiv', resetPast7Days, layout);
+            $("#option3Days-label").css("color", "#ffffff");
+            $("#option5Days-label").css("color", "#ffffff");
+            $("#option7Days-label").css("color", "#ffff33");
         })
     });
 })
