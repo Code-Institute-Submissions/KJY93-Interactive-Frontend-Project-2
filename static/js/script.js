@@ -102,23 +102,6 @@ $(document).ready(function () {
                 // Get time at current location based on timezone 101219
                 var currentTimeObject = moment.unix(response["currently"]["time"]).tz(cityTimeZone).format('YYYY-MM-DD HH:mm A');
 
-                // Past 7 days data inclusive of current date
-                let lastSevenDayUnixFormat = response["currently"]["time"] - (60 * 60 * 24 * 6);
-
-                let lastSevenDayDateTimeFormat = moment.unix(lastSevenDayUnixFormat).tz(cityTimeZone).format('YYYY-MM-DD HH:mm A');
-
-                // start week date of the previous week
-                localStorage.setItem("DateTimeLocalStoragePW", lastSevenDayDateTimeFormat);
-
-                // current date
-                localStorage.setItem("DateTimeLocalStorageCW", currentTimeObject);
-
-                // Save the longitude and latitude to local Storage
-                localStorage.setItem("lng_coordinates", longitude);
-
-                // current date
-                localStorage.setItem("lat_coordinates", latitude);
-
                 // save the current city to local Storage
                 localStorage.setItem("currentCity", city);
 
@@ -231,7 +214,6 @@ $(document).ready(function () {
             }
         });
 
-
         // define an empty array to save the date and temperature value
         let xDate = [];
         let yTempCelMin = [];
@@ -242,6 +224,14 @@ $(document).ready(function () {
         let yTempFahAvg = [];
         let yTempFahMax = [];
 
+        // Past 7 days data inclusive of current date
+        // Get the date of the start of last week (e.g. if today is 11th Dec, 7 days ago would be 5th Dec, inclusive of 11th Dec itself)
+        let currentDateUnix = moment().unix();
+        let pastDateUnix = moment().unix() - (24*60*60*6);
+
+        let currentDate = moment.unix(currentDateUnix).tz(cityTimeZone).format('YYYY-MM-DD HH:mm A').substring(0, 10);
+        let startWeekDate = moment.unix(pastDateUnix).tz(cityTimeZone).format('YYYY-MM-DD HH:mm A').substring(0, 10);
+
         // Default selection - Past 7 Days Data
 
         $("#option7Days").attr("checked", "checked");
@@ -250,21 +240,12 @@ $(document).ready(function () {
 
         document.getElementById("option7Days-label").classList.add("active");
 
-        // Get longitude and latitude data from localstorage
-        let lngValue = localStorage.getItem("lng_coordinates");
-        let latValue = localStorage.getItem("lat_coordinates");
-
-        // Get the date of the start of last week (e.g. if today is 11th Dec, 7 days ago would be 5th Dec, inclusive of 11th Dec itself) 111219
-
-        let startWeekDate = (localStorage.getItem("DateTimeLocalStoragePW")).substring(0, 10);
-        let currentDate = (localStorage.getItem("DateTimeLocalStorageCW")).substring(0, 10);
-
         // Do a query to the weather API to get the past 7 days temperature data
         $.ajax({
             type: "GET",
             dataType: "json",
             contentType: "text/plain",
-            url: `http://api.weatherapi.com/v1/history.json?key=9eca6ab9a63f498ba7a130121191012&q=${latValue},${lngValue}&dt=${startWeekDate}&end_dt=${currentDate}`,
+            url: `http://api.weatherapi.com/v1/history.json?key=9eca6ab9a63f498ba7a130121191012&q=${latitude},${longitude}&dt=${startWeekDate}&end_dt=${currentDate}`,
 
             success: function (response) {
                 for (let ct = 0; ct < response["forecast"]["forecastday"].length; ct++) {
@@ -279,6 +260,7 @@ $(document).ready(function () {
                     yTempCelMax.push(response["forecast"]["forecastday"][ct]["day"]["maxtemp_c"]);
                     yTempFahMax.push(response["forecast"]["forecastday"][ct]["day"]["maxtemp_f"]);
 
+                }
                     // Save the historical data to local storage
                     localStorage.setItem("xAxisDate", JSON.stringify(xDate));
                     localStorage.setItem("yAxisTempCelMin", JSON.stringify(yTempCelMin));
@@ -287,7 +269,6 @@ $(document).ready(function () {
                     localStorage.setItem("yAxisTempFahMin", JSON.stringify(yTempFahMin));
                     localStorage.setItem("yAxisTempFahAvg", JSON.stringify(yTempFahAvg));
                     localStorage.setItem("yAxisTempFahMax", JSON.stringify(yTempFahMax));
-                }
             },
             // alert the user on the error response code if the API query fails
             error: function (request, status, error) {
@@ -295,6 +276,7 @@ $(document).ready(function () {
             }
 
         });
+
     };
 
     // Degree Celcius / Fahrenheit Conversion
@@ -483,6 +465,8 @@ $(document).ready(function () {
 
         });
 
+
+
     })
 
 
@@ -496,9 +480,6 @@ $(document).ready(function () {
         let yTempFahMinVal = JSON.parse(localStorage.getItem("yAxisTempFahMin"));
         let yTempFahAvgVal = JSON.parse(localStorage.getItem("yAxisTempFahAvg"));
         let yTempFahMaxVal = JSON.parse(localStorage.getItem("yAxisTempFahMax"));
-
-        console.log(xDateVal);
-        console.log(yTempCelMinVal.slice(4,6));
         
         // Get city name
         let weatherLocation = localStorage.getItem("currentCity");
