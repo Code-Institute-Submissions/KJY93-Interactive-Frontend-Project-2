@@ -44,11 +44,11 @@ label {
 }
 
 #amPm, #weather-condition {
-    font-size: 1.5em;
+    font-size: 1.3em;
 }
 
 #daily-temp-summary-container, tr {
-    font-size: 1.5em;
+    font-size: 1.3em;
 }
 
 #city-section {
@@ -60,7 +60,7 @@ label {
 }
 
 #copyright-design {
-    font-size: 1.3em;
+    font-size: 1.1em;
 }
 
 #current-day-container {
@@ -183,9 +183,5 @@ label {
     
     #city-section {
         font-size: 2.0em;
-    }
-    
-    #copyright-design {
-        font-size: 1.1em;
     }
 }
